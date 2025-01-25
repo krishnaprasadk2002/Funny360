@@ -22,6 +22,8 @@ const path = require("path");
 const uploadCloudinary = require("../configs/couldinary");
 const { authenticateToken } = require("../middleware/accessToken");
 const { ShareholderInfo } = require("../models/shareHoldersInfo");
+const invateShareHolder = require("../models/invateShareHolder");
+const { sendShareInvitationEmail } = require("../configs/sendShareMail");
 var liveurlnew = "./uploads";
 // var liveurlnew="../newcomsec/src/assets";
 var storage = multer.diskStorage({
@@ -113,31 +115,53 @@ router.post("/creationOfShare", async (req, res) => {
     const numericTotalShare = parseInt(total_share, 10);
     const numericAmountShare = parseFloat(amount_share);
 
-    const newShare = new Shareholdercapital({
-      userid,
-      companyid,
-      capital: {
+    const existingShare = await Shareholdercapital.findOne({ companyid, userid });
+
+    if (existingShare) {
+
+      existingShare.capital = {
         total_share: numericTotalShare,
         amount_share: numericAmountShare,
         total_capital_subscribed,
         unpaid_amount,
         share_class,
         share_right,
-      },
-    });
+      };
+      await existingShare.save();
 
-    await newShare.save();
+      await Companyaccount.findByIdAndUpdate(companyid, {
+        $inc: { total_share: numericTotalShare },
+      });
+      return res.status(200).json({ message: "Share capital updated successfully!" });
+    } else {
 
-    await Companyaccount.findByIdAndUpdate(companyid, {
-      $inc: { total_share: numericTotalShare },
-    });
+      const newShare = new Shareholdercapital({
+        userid,
+        companyid,
+        capital: {
+          total_share: numericTotalShare,
+          amount_share: numericAmountShare,
+          total_capital_subscribed,
+          unpaid_amount,
+          share_class,
+          share_right,
+        },
+      });
 
-    res.status(201).json({ message: "Share created successfully!" });
+      await newShare.save();
+
+      await Companyaccount.findByIdAndUpdate(companyid, {
+        $inc: { total_share: numericTotalShare },
+      });
+
+      res.status(201).json({ message: "Share created successfully!" });
+    }
   } catch (error) {
-    console.error("Error creating share:", error);
+    console.error("Error creating/updating share:", error);
     res.status(500).json({ message: "Server error. Please try again later." });
   }
 });
+
 
 
 
@@ -196,6 +220,60 @@ router.post("/shareHoldersInfo", async (req, res) => {
 });
 
 
+// create InvateShareHolders
+router.post("/invateShare", async (req, res) => {
+  try {
+    const {
+      name,
+      email,
+      classOfShares,
+      noOfShares,
+      userId, 
+      companyId 
+    } = req.body;
+
+    console.log('Received data:', req.body);
+
+    if (!name) {
+      console.error("Name is required.");
+    }
+    if (!email) {
+      console.error("Email is required.");
+    }
+    if (!classOfShares) {
+      console.error("Class of Shares is required.");
+    }
+    if (!noOfShares) {
+      console.error("Number of Shares is required.");
+    }
+    if (!userId) {
+      console.error("User ID is required.");
+    }
+    if (!companyId) {
+      console.error("Company ID is required.");
+    }
+    
+     const InvateShareHolders = new invateShareHolder({
+      name,
+      email,
+      classOfShares,
+      noOfShares,
+      userId: mongoose.Types.ObjectId(userId), 
+      companyId: mongoose.Types.ObjectId(companyId)
+    });
+
+    await InvateShareHolders.save();
+
+    await sendShareInvitationEmail(email, name, classOfShares, noOfShares);
+
+    res.status(201).json({ message: "Invitation to shareholder sent successfully!" });
+  }  catch (error) {
+    console.error("Error creating shareholder invate mail:", error);
+    res.status(500).json({ message: "Server error. Please try again later." });
+  }
+});
+
+
 router.get("/getShareCapitalList", async (req, res) => {
   try {
     const { companyId, userId } = req.query; 
@@ -246,7 +324,27 @@ router.get("/getShareHoldersList", async (req, res) => {
   }
 });
 
+// Add this route to your router
+router.delete("/deleteShareCapital/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
 
+    if (!id) {
+      return res.status(400).json({ message: "ID is required." });
+    }
+
+    const deletedShareCapital = await Shareholdercapital.findByIdAndDelete(id);
+
+    if (!deletedShareCapital) {
+      return res.status(404).json({ message: "Share capital not found." });
+    }
+
+    res.status(200).json({ message: "Share capital deleted successfully." });
+  } catch (error) {
+    console.error("Error deleting share capital:", error);
+    res.status(500).json({ message: "Server error while deleting share capital." });
+  }
+});
 
 
 

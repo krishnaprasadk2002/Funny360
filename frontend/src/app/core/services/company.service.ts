@@ -73,5 +73,26 @@ getShareHoldersList(companyId: string, userId: string): Observable<{ message: st
     );
 }
 
+InvateshareHoldersCreation(data: any): Observable<{ message: string }> {
+  return this.http.post<{ message: string }>(`${this.baseUrl}company/invateShare`, data).pipe(
+    catchError((error) => {
+      console.error("Share creation error:", error);
+      const errorMessage = error.error?.message || "Failed to create shares.";
+      return throwError(() => new Error(errorMessage));
+    })
+  );
+}
+
+deleteShareCapital(id: string): Observable<{ message: string }> {
+  return this.http.delete<{ message: string }>(`${this.baseUrl}company/deleteShareCapital/${id}`).pipe(
+    catchError((error) => {
+      console.error("Error deleting share capital:", error);
+      const errorMessage = error.error?.message || "Failed to delete share capital.";
+      return throwError(() => new Error(errorMessage));
+    })
+  );
+}
+
+
   
 }

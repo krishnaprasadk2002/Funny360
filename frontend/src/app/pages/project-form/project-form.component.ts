@@ -37,12 +37,14 @@ export class ProjectFormComponent implements OnInit {
   shareholders: any[] = [];
   activeTabIndex = 0;
   showForm:boolean = false;
+  invateShareHolderForm:boolean = false
   imagePreview: string | null = null; 
   addressProofPreview: string | null = null;
   idProofPreview: string | ArrayBuffer | null = null; 
   companyInfoForm!: FormGroup;
   addShareForm!: FormGroup;
   shareHoldersForm!:FormGroup;
+  inviteShareholderForm!:FormGroup
   selectedNodes: string = "";
   selectedCountry = ""
   countries: any[] = [
@@ -333,6 +335,7 @@ export class ProjectFormComponent implements OnInit {
     this.initializeCompanyInfoForm()
     this.initializeAddSharesForm()
     this.initializeSharesHoldersForm()
+    this.initializeInvateSharesHoldersForm()
 
     this.companyInfoForm.get('country_Address')?.disable();
     this.companyInfoForm.get('presentorReferance')?.disable();
@@ -375,17 +378,20 @@ export class ProjectFormComponent implements OnInit {
       }
     });
   }
+
   getErrorMessage(controlName: string): string {
     const control = this.companyInfoForm.get(controlName);
-  
+
     if (control?.touched || control?.dirty) { 
-      if (control?.hasError('required')) {
-        return `${controlName} is required.`;
-      }
+        if (control?.hasError('required')) {
+            return `${controlName} is required.`;
+        }
+        if (control?.hasError('email')) {
+            return `${controlName} must be a valid email address.`;
+        }
     }
     return '';
-  }
-
+}
   getErrorMessage1(controlName: string): string {
     const control = this.addShareForm.get(controlName);
   
@@ -585,8 +591,8 @@ export class ProjectFormComponent implements OnInit {
                 text: response.message,
                 confirmButtonText: "OK",
             });
-            this.getShareCapitalList();
-            this.addShareForm.reset(); 
+            this.getShareCapitalList(); 
+            this.resetAddShareForm();  
         },
         error: (error) => {
             console.error("Error for share creating", error);
@@ -599,6 +605,25 @@ export class ProjectFormComponent implements OnInit {
         },
     });
 }
+
+resetAddShareForm() {
+    this.addShareForm.reset({
+        class_of_shares: '',
+        total_shares_proposed: '',
+        currency: 'HKD',  
+        unit_price: null,
+        total_amount: { value: null, disabled: true },
+        total_capital_subscribed: '',
+        unpaid_amount: { value: 0, disabled: true },
+        particulars_of_rights: ''
+    });
+
+    this.addShareForm.get('total_amount')?.enable();
+    this.addShareForm.get('unpaid_amount')?.enable();
+
+    this.initializeAddSharesForm();
+}
+
 
 
 
@@ -758,10 +783,45 @@ getShareCapitalList() {
 editShareCapitalList(event:Event){
 console.log(event);
 }
-deleteShareCapitalList(id:string){
-console.log('SC',id);
 
+
+deleteShareCapitalList(id: string) {
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.companyService.deleteShareCapital(id).subscribe({
+        next: (response) => {
+          console.log('Share capital deleted:', response.message);
+          Swal.fire({
+            icon: 'success',
+            title: 'Deleted!',
+            text: response.message,
+            confirmButtonText: 'OK'
+          });
+
+          this.getShareCapitalList();
+        },
+        error: (error) => {
+          console.error('Error deleting share capital:', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: error.message,
+            confirmButtonText: 'Retry'
+          });
+        }
+      });
+    }
+  });
 }
+
 
 getShareHoldersList() {
   const userId = localStorage.getItem("userId");
@@ -791,6 +851,82 @@ getShareHoldersList() {
       });
     },
   });
+}
+
+invateShareHoldersButton(){
+  this.invateShareHolderForm=!this.invateShareHolderForm
+}
+
+
+initializeInvateSharesHoldersForm(){
+  this.inviteShareholderForm = this.fb.group({
+    name: ['', Validators.required],
+    email: ['', Validators.required],
+    classOfShares: ['Ordinary', Validators.required],
+    noOfShares: ['', Validators.required],
+  });
+}
+
+invateShareHoldersSubmit() {
+  if (this.inviteShareholderForm.invalid) {
+    this.inviteShareholderForm.markAllAsTouched(); 
+    return; 
+  }
+
+  const userId = localStorage.getItem('userId');
+  const companyId = this.companyId;
+
+  const formData = {
+    ...this.inviteShareholderForm.value,
+    userId: userId, 
+    companyId: companyId
+  };
+
+  console.log(formData);
+  
+  this.companyService.InvateshareHoldersCreation(formData).subscribe({
+    next: (response) => {
+      console.log('Shareholder invitation successful:', response.message);
+      
+      Swal.fire({
+        icon: 'success',
+        title: 'Invitation Sent!',
+        text: `The invitation to ${formData.name} has been sent successfully!`,
+        confirmButtonText: 'OK'
+      });
+
+      this.inviteShareholderForm.reset();
+      this.addressProofPreview = null;
+      this.idProofPreview = null;
+      this.getShareHoldersList();
+    },
+    error: (error) => {
+      console.error('Error occurred during share creation:', error);
+
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: error.message,
+        confirmButtonText: 'Retry'
+      });
+    }
+  });
+}
+
+
+clearInvateShareHoldersForm(){
+  this.inviteShareholderForm.reset()
+}
+
+getErrorMessage3(controlName: string): string {
+  const control = this.inviteShareholderForm.get(controlName);
+
+  if (control?.touched || control?.dirty) { 
+    if (control?.hasError('required')) {
+      return `${controlName} is required.`;
+    }
+  }
+  return '';
 }
 
 }

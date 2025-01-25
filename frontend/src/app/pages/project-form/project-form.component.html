@@ -2319,6 +2319,7 @@
                     </div>
                     <div class="flex items-center space-x-2 py-6">
                       <button
+                      (click)="invateShareHoldersButton()"
                         type="button"
                         role="radio"
                         aria-checked="false"
@@ -2335,7 +2336,7 @@
                         >Invite a Shareholder to fill in the details.</label
                       >
                     </div>
-                    <div class="hidden">
+                    <div  *ngIf="invateShareHolderForm">
                       <div
                         class="rounded-lg border bg-card text-card-foreground shadow-sm"
                       >
@@ -2351,7 +2352,7 @@
                           </p>
                         </div>
                         <div class="p-6 pt-0">
-                          <form class="space-y-8">
+                          <form class="space-y-8" [formGroup]="inviteShareholderForm" (ngSubmit)="invateShareHoldersSubmit()">
                             <div class="relative w-full overflow-auto">
                               <table class="w-full caption-bottom text-sm">
                                 <thead class="[&amp;_tr]:border-b">
@@ -2393,7 +2394,14 @@
                                           aria-describedby=":rk2:-form-item-description"
                                           aria-invalid="false"
                                           name="name"
+                                          formControlName="name"
                                         />
+                                        <div
+                                        class="error-message"
+                                        *ngIf="getErrorMessage3('name')"
+                                      >
+                                        {{ getErrorMessage3("name") }}
+                                      </div>
                                       </div>
                                     </td>
                                     <td
@@ -2408,7 +2416,14 @@
                                           aria-invalid="false"
                                           type="email"
                                           name="email"
+                                          formControlName="email"
                                         />
+                                        <div
+                                        class="error-message"
+                                        *ngIf="getErrorMessage3('email')"
+                                      >
+                                        {{ getErrorMessage3("email") }}
+                                      </div>
                                       </div>
                                     </td>
                                   </tr>
@@ -2471,69 +2486,40 @@
                                     <td
                                       class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0"
                                     >
-                                      <div class="space-y-2">
-                                        <button
-                                          type="button"
-                                          role="combobox"
-                                          aria-controls="radix-:rk5:"
-                                          aria-expanded="false"
-                                          aria-autocomplete="none"
-                                          dir="ltr"
-                                          data-state="closed"
-                                          data-placeholder=""
-                                          class="flex h-10 w-full items-center justify-between rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&amp;>span]:line-clamp-1"
+                                    <div class="space-y-2">
+                                      <div>
+                                        <select
+                                          id="classOfShares"
+                                          formControlName="classOfShares"
+                                          class="flex h-10 w-full items-center rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                                         >
-                                          <span style="pointer-events: none"
-                                            >Class of Shares</span
-                                          ><svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="24"
-                                            height="24"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            stroke-width="2"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            class="lucide lucide-chevron-down h-4 w-4 opacity-50"
-                                            aria-hidden="true"
-                                          >
-                                            <path d="m6 9 6 6 6-6"></path>
-                                          </svg></button
-                                        ><select
-                                          aria-hidden="true"
-                                          tabindex="-1"
-                                          style="
-                                            position: absolute;
-                                            border: 0px;
-                                            width: 1px;
-                                            height: 1px;
-                                            padding: 0px;
-                                            margin: -1px;
-                                            overflow: hidden;
-                                            clip: rect(0px, 0px, 0px, 0px);
-                                            white-space: nowrap;
-                                            overflow-wrap: normal;
-                                          "
-                                        >
-                                          <option value=""></option>
+                                          <option value="">
+                                            Select Class of Shares
+                                          </option>
                                           <option value="Ordinary">
-                                            Ordinary800
+                                            Ordinary
                                           </option>
                                           <option value="Preferance">
-                                            Preferance800
+                                            Preference
                                           </option>
                                           <option value="Ordinary Class 1">
+                                            Ordinary Class 1
+                                          </option>
+                                          <option value="Ordinary Class 10">
                                             Ordinary Class 10
                                           </option>
-                                          <option value="Ordinary">
-                                            Ordinary0
-                                          </option>
                                           <option value="Ordinary12">
-                                            Ordinary120
+                                            Ordinary 12
                                           </option>
                                         </select>
+                                        <div
+                                      class="error-message"
+                                      *ngIf="getErrorMessage3('classOfShares')"
+                                    >
+                                      {{ getErrorMessage3("classOfShares") }}
+                                    </div>
                                       </div>
+                                    </div>
                                     </td>
                                     <td
                                       class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0"
@@ -2543,14 +2529,21 @@
                                         type="number"
                                         value="800"
                                         name="shareDetails.0.noOfShares"
+                                        formControlName="noOfShares"
                                       />
+                                      <div
+                                      class="error-message"
+                                      *ngIf="getErrorMessage3('noOfShares')"
+                                    >
+                                      {{ getErrorMessage3("noOfShares") }}
+                                    </div>
                                     </td>
                                     <td
                                       class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0"
                                     >
                                       <button
                                         class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-destructive text-destructive-foreground hover:bg-destructive/90 h-10 px-4 py-2"
-                                        type="button"
+                                        type="button" (click)="clearInvateShareHoldersForm()"
                                       >
                                         <svg
                                           xmlns="http://www.w3.org/2000/svg"
