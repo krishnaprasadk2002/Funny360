@@ -1,0 +1,4 @@
+$env:NODE_OPTIONS="--openssl-legacy-provider"
+
+path:- Backend\models\user.js
+    require:false, 

@@ -1,0 +1,175 @@
+<div class="register-div container my-6 login-div">
+    <div class="flex justify-content-center align-item-center">
+      <div class="">
+        <div class="card shadow-sm border-color min-w-[370px]">
+          <div class="card-body">
+            <div class="isolate bg-white px-3 lg:px-5 border-inherit">
+              <div
+                class="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]"
+                aria-hidden="true"
+              ></div>
+              <div class="d-flex" style="align-items: center;">
+                <img
+                  src="assets/logos/logo.png"
+                  alt=""
+                  style="width: 12%; height: 13%;"
+                />
+                <div class="mx-auto max-w-2xl">
+                  <h2 class="text-balance text-2xl font-semibold tracking-tight text-gray-900 sm:text-2xl">
+                    ComSec360
+                  </h2>
+                  <p class="text-sm text-gray-600">
+                    Company Secretarial Management
+                  </p>
+                </div>
+              </div>
+              <div class="text-center text-black my-3" style="font-weight: 600;">
+                Create an Account
+              </div>
+              <form
+                [formGroup]="registerForm"
+                (ngSubmit)="onRegister()"
+                class="mx-auto mt-4 max-w-xl sm:mt-4"
+              >
+                <div>
+                  <!-- Full Name -->
+                  <div class="mt-2">
+                    <label
+                      for="name"
+                      class="block text-sm font-medium text-gray-900"
+                      >Full Name</label
+                    >
+                    <div class="mt-1">
+                      <input
+                        type="text"
+                        formControlName="name"
+                        placeholder="Rohit Sharma"
+                        class="w-full border rounded-lg px-3 py-2 outline-none focus:ring focus:ring-indigo-300"
+                        [ngClass]="{
+                          'input-error': registerForm.get('name')?.invalid &&
+                          (registerForm.get('name')?.touched || registerForm.get('name')?.dirty)
+                        }"
+                      />
+                      <p class="h-2 text-red-600">{{ nameError }}</p>
+                    </div>
+                  </div>
+  
+                  <!-- Role -->
+                  <div class="mt-2">
+                    <label
+                      for="roles"
+                      class="block text-sm font-medium text-gray-900"
+                      >Role</label
+                    >
+                    <div class="mt-1">
+                      <select
+                        formControlName="roles"
+                        class="w-full border rounded-lg px-3 py-2 outline-none focus:ring focus:ring-indigo-300"
+                        [ngClass]="{
+                          'input-error': registerForm.get('roles')?.invalid &&
+                          (registerForm.get('roles')?.touched || registerForm.get('roles')?.dirty)
+                        }"
+                      >
+                        <option value="" disabled selected>Select Role</option>
+                        <option value="Shareholder">Shareholder</option>
+                        <option value="Director">Director</option>
+                        <option value="Company Secretary">Company Secretary</option>
+                        <option value="Employee">Employee</option>
+                      </select>
+                      <p class="h-2 text-red-600">{{ rolesError }}</p>
+                    </div>
+                  </div>
+  
+                  <!-- Email -->
+                  <div class="mt-2">
+                    <label
+                      for="email"
+                      class="block text-sm font-medium text-gray-900"
+                      >Email</label
+                    >
+                    <div class="mt-1">
+                      <input
+                        type="email"
+                        formControlName="email"
+                        placeholder="xyz@gmail.com"
+                        class="w-full border rounded-lg px-3 py-2 outline-none focus:ring focus:ring-indigo-300"
+                        [ngClass]="{
+                          'input-error': registerForm.get('email')?.invalid &&
+                          (registerForm.get('email')?.touched || registerForm.get('email')?.dirty)
+                        }"
+                      />
+                      <p class="h-2 text-red-600">{{ emailError }}</p>
+                    </div>
+                  </div>
+  
+                  <!-- Password -->
+                  <div class="mt-2">
+                    <label
+                      for="password"
+                      class="block text-sm font-medium text-gray-900"
+                      >Password</label
+                    >
+                    <div class="mt-1">
+                      <input
+                        type="password"
+                        formControlName="password"
+                        placeholder="********"
+                        class="w-full border rounded-lg px-3 py-2 outline-none focus:ring focus:ring-indigo-300"
+                        [ngClass]="{
+                          'input-error': registerForm.get('password')?.invalid &&
+                          (registerForm.get('password')?.touched || registerForm.get('password')?.dirty)
+                        }"
+                      />
+                      <p class="h-2 text-red-600">{{ passwordError }}</p>
+                    </div>
+                  </div>
+  
+                  <!-- Mobile Number -->
+                  <div class="mt-2">
+                    <label
+                      for="mobile_number"
+                      class="block text-sm font-medium text-gray-900"
+                      >Mobile Number</label
+                    >
+                    <div class="mt-1">
+                      <input
+                        type="text"
+                        formControlName="mobile"
+                        placeholder="1234567890"
+                        class="w-full border rounded-lg px-3 py-2 outline-none focus:ring focus:ring-indigo-300"
+                        [ngClass]="{
+                          'input-error': registerForm.get('mobile_number')?.invalid &&
+                          (registerForm.get('mobile_number')?.touched || registerForm.get('mobile_number')?.dirty)
+                        }"
+                      />
+                      <p class="h-2 text-red-600">{{ mobileNumberError }}</p>
+                    </div>
+                  </div>
+                </div>
+  
+                <!-- Submit Button -->
+                <div class="mt-10">
+                  <button
+                    type="submit"
+                    class="block float-right rounded-md bg-black px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  >
+                    Register
+                  </button>
+                </div>
+                <div class="mt-2">
+                    <span class="text-sm text-gray-700">Already have an account?</span>
+                    <a
+                      [routerLink]="['/login']"
+                      class="text-sm font-medium text-indigo-600 hover:underline"
+                    >
+                      Login Here
+                    </a>
+                  </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

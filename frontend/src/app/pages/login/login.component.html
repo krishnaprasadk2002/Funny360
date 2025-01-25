@@ -1,0 +1,133 @@
+<div class="login-div container my-6">
+  <div class="flex justify-content-center align-item-center">
+    <div class="">
+      <div class="card shadow-sm border-color min-w-[370px]">
+        <div class="card-body">
+          <div
+            class="isolate bg-white px-3 lg:px-5 border-inherit"
+          >
+            <div
+              class="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]"
+              aria-hidden="true"
+            ></div>
+            <div class="d-flex " style="align-items: center;">
+                <img src="assets/logos/logo.png" alt="" style="width: 12%;height: 13%;">
+                <div class="mx-auto max-w-2xl ">
+               
+                    <h2
+                      class="text-balance text-2xl font-semibold tracking-tight text-gray-900 sm:text-2xl"
+                    >ComSec360
+                    </h2>
+                    <p class=" text-sm text-gray-600">Company Secretarial Management</p>
+                  </div>
+            </div>
+          
+            <div class="text-center text-black my-3" style="font-weight: 600;">
+                Account User
+            </div>
+            <form
+              [formGroup]="loginForm"
+              (ngSubmit)="onlogin()"
+              class="mx-auto mt-4 max-w-xl sm:mt-4"
+            >
+              <div class="">
+                <div>
+                  <label
+                    for="first-name" 
+                    class="block text-sm/6 font-medium text-gray-900"
+                    >Email</label
+                  >
+                  <div class="mt-1">
+                    <input pInputText
+                      type="email"
+                      formControlName="email"
+                      placeholder="xyz@gmail.com"
+                      class="w-full "
+                      [ngClass]="{
+                        'input-error': loginForm.get('email')?.invalid && (loginForm.get('email')?.touched || loginForm.get('email')?.dirty),
+                      }"
+                    />
+                <p class="h-2 text-red-600">{{emailError}}</p>
+
+                  </div>
+                </div>
+                <div class="mt-2.5">
+                  <label
+                    for="Password"
+                    class="block text-sm/6 font-medium text-gray-900"
+                    >Password</label
+                  >
+                  <div class="mt-1">
+                    <input
+                      pInputText
+                      type="password"
+                      formControlName="password"
+                      placeholder="********"
+                      class="w-full "
+                      [ngClass]="{
+                        'input-error': loginForm.get('password')?.invalid && (loginForm.get('password')?.touched || loginForm.get('password')?.dirty),
+                      }"
+                    />
+                  <p class="h-2 text-red-600">{{passwordError}}</p>
+                  </div>
+                </div>
+                <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-primary underline-offset-4 hover:underline h-10 px-4 py-2 text-black">Reset Password</button>
+                <div class="sm:col-span-2 mt-2.5" >
+                  <label
+                    for="company"
+                    class="block text-sm/6 font-medium text-gray-900"
+                    >2 Factor Authentication Code</label
+                  >
+                  <div class="mt-2.5">
+                    <input
+                    [disabled]="!show2FA"
+                    type="text"
+                    formControlName="otp"
+                    placeholder="****"
+                    class="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-black"
+                  />
+                  
+                  </div>
+                  <div *ngIf="show2FA && !showResend" class="text-sm text-gray-600 mt-2">
+                    Resend code in {{ timer }} seconds.
+                  </div>
+                  <button
+                    *ngIf="show2FA && showResend"
+                    (click)="resendCode()"
+                    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-primary underline-offset-4 hover:underline h-10 px-4 py-2 text-black"
+                  >
+                    Resend Code
+                  </button>
+                </div>
+              </div>
+              <div class="mt-10">
+                @if (show2FA) {
+                  <button 
+                  type="submit"
+                  class="block float-right rounded-md bg-black px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 "
+                >Verify
+                </button>
+                }@else {
+                  <button 
+                  type="submit"
+                  class="block float-right rounded-md bg-black px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 "
+                >Login
+                </button> 
+                }
+              </div>
+              <div class="mt-4 text-center">
+                <span class="text-sm text-gray-700">No account?</span>
+                <a
+                  [routerLink]="['/register']"
+                  class="text-sm font-medium text-indigo-600 hover:underline"
+                >
+                  Register Here
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

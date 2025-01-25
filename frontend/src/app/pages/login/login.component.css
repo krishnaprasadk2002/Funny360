@@ -1,0 +1,11 @@
+.login-div{
+    font-family: 'comsecfont', sans-serif;
+}
+
+.test{
+    background-color: yellow !important;
+    color: aquamarine !important;
+    border: 100px yellow;
+    outline: 10px green;
+}
+

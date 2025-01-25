@@ -1,0 +1,17 @@
+.text-danger {
+    color: red;
+    font-weight: bold;
+    font-size: 18px;
+  }
+
+  .error-message {
+    color: red; 
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  select {
+    width: 100%; 
+    min-width: 100px;
+  }
+  

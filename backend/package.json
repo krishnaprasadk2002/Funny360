@@ -1,0 +1,35 @@
+{
+  "name": "comsec360",
+  "version": "1.0.0",
+  "description": "Accounting Software",
+  "main": "index.js",
+  "author": "Synram",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cloudinary": "^2.5.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "file-type": "^16.5.3",
+    "fs": "0.0.1-security",
+    "http-errors": "^1.8.0",
+    "joi": "^17.4.1",
+    "jsonwebtoken": "^8.5.1",
+    "jspdf-customfonts": "0.0.4-rc.4",
+    "mongoose": "^5.13.3",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.3",
+    "multiparty": "^4.2.2",
+    "nodemailer": "^6.6.2",
+    "nodemon": "^2.0.12",
+    "path": "^0.12.7",
+    "request": "^2.88.2",
+    "uuid": "^8.3.2"
+  },
+  "scripts": {
+    "start": " nodemon ./index.js"
+  }
+}
