@@ -93,6 +93,36 @@ deleteShareCapital(id: string): Observable<{ message: string }> {
   );
 }
 
+DirectorInfoCreation(data: any): Observable<{ message: string }> {
+  return this.http.post<{ message: string }>(`${this.baseUrl}company/directorInfoCreation`, data).pipe(
+    catchError((error) => {
+      console.error("Direct Information creation error:", error);
+      const errorMessage = error.error?.message || "Failed to create directors.";
+      return throwError(() => new Error(errorMessage));
+    })
+  );
+}
+
+directorInviteCreation(data: any): Observable<{ message: string }> {
+  return this.http.post<{ message: string }>(`${this.baseUrl}company/inviteDirector`, data).pipe(
+    catchError((error) => {
+      console.error("Director Invite error:", error);
+      const errorMessage = error.error?.message || "Failed to Invite Director.";
+      return throwError(() => new Error(errorMessage));
+    })
+  );
+}
+
+companySecretaryCreation(data: any): Observable<{ message: string }> {
+  return this.http.post<{ message: string }>(`${this.baseUrl}company/companySecretary`, data).pipe(
+    catchError((error) => {
+      console.error("comapany Secretry creation error:", error);
+      const errorMessage = error.error?.message || "Failed to create company secretary.";
+      return throwError(() => new Error(errorMessage));
+    })
+  );
+}
+
 
   
 }

@@ -15,3 +15,9 @@
     min-width: 100px;
   }
   
+  .border-primary {
+    border-color: #3b82f6; 
+  }
+  .bg-primary {
+    background-color: #3b82f6; 
+  }

@@ -24,6 +24,10 @@ const { authenticateToken } = require("../middleware/accessToken");
 const { ShareholderInfo } = require("../models/shareHoldersInfo");
 const invateShareHolder = require("../models/invateShareHolder");
 const { sendShareInvitationEmail } = require("../configs/sendShareMail");
+const { sendDirectorInvitationEmail } = require("../configs/directorMail");
+const DirectorInvite = require("../models/DirectorInvite");
+const directorInfo = require("../models/directorInfo");
+const companySecretary = require("../models/companySecretary");
 var liveurlnew = "./uploads";
 // var liveurlnew="../newcomsec/src/assets";
 var storage = multer.diskStorage({
@@ -346,6 +350,193 @@ router.delete("/deleteShareCapital/:id", async (req, res) => {
   }
 });
 
+
+
+//Director info creation
+router.post("/directorInfoCreation", async (req, res) => {
+  try {
+    const {
+      surname,
+      name,
+      idNo,
+      idProof,
+      type,
+      address,
+      addressProof,
+      email,
+      phone,
+      userId,
+      companyId,
+    } = req.body;
+
+    console.log("Received data:", req.body);
+
+    if (
+      !surname ||
+      !name ||
+      !idNo ||
+      !idProof ||
+      !type ||
+      !address ||
+      !addressProof ||
+      !email ||
+      !phone ||
+      !userId ||
+      !companyId
+    ) {
+      return res.status(400).json({ message: "All fields are required." });
+    }
+
+    const idProofUrl = await uploadCloudinary(idProof);
+    const addressProofUrl = await uploadCloudinary(addressProof);
+
+    // Create a new director document
+    const newDirector = new directorInfo({
+      surname,
+      name,
+      idNo,
+      idProof: idProofUrl,
+      type,
+      address,
+      addressProof: addressProofUrl,
+      email,
+      phone,
+      userId: mongoose.Types.ObjectId(userId),
+      companyId: mongoose.Types.ObjectId(companyId),
+    });
+
+    await newDirector.save();
+
+    res.status(201).json({ message: "Director info created successfully!" });
+  } catch (error) {
+    console.error("Error creating director info:", error);
+
+    if (error.code === 11000) {
+      return res
+        .status(400)
+        .json({ message: "Email or ID number already exists." });
+    }
+
+    res.status(500).json({ message: "Server error. Please try again later." });
+  }
+});
+
+
+// create InvateShareHolders
+router.post("/inviteDirector", async (req, res) => {
+  try {
+    const { name, email, classOfShares, noOfShares, userId, companyId } = req.body;
+
+    if (!name) {
+      console.error("Name is required.");
+    }
+    if (!email) {
+      console.error("Email is required.");
+    }
+    if (!classOfShares) {
+      console.error("Class of Shares is required.");
+    }
+    if (!noOfShares) {
+      console.error("Number of Shares is required.");
+    }
+    if (!userId) {
+      console.error("User ID is required.");
+    }
+    if (!companyId) {
+      console.error("Company ID is required.");
+    }
+
+    const directorInvite = new DirectorInvite({
+      name,
+      email,
+      classOfShares,
+      noOfShares,
+      userId: mongoose.Types.ObjectId(userId),
+      companyId: mongoose.Types.ObjectId(companyId),
+    });
+
+    await directorInvite.save();
+
+    // Send an invitation email
+    await sendDirectorInvitationEmail(email, name, classOfShares, noOfShares);
+
+    res.status(201).json({ message: "Invitation sent to the director successfully!" });
+  } catch (error) {
+    console.error("Error creating director invitation:", error);
+    res.status(500).json({ message: "Server error. Please try again later." });
+  }
+});
+
+//comapny secretary creation
+router.post("/companySecretary", async (req, res) => {
+  try {
+    const {
+      tcspLicenseNo,
+      tcspReason,
+      type,
+      surname,
+      name,
+      idProof,
+      address,
+      addressProof,
+      email,
+      phone,
+      userId,
+      companyId,
+    } = req.body;
+
+    console.log("Received data:", req.body);
+
+    if (
+      !tcspLicenseNo ||
+      !tcspReason ||
+      !type ||
+      !surname ||
+      !name ||
+      !idProof ||
+      !address ||
+      !addressProof ||
+      !email ||
+      !phone ||
+      !userId ||
+      !companyId
+    ) {
+      return res.status(400).json({ message: "All fields are required." });
+    }
+
+    const idProofUrl = await uploadCloudinary(idProof);
+    const addressProofUrl = await uploadCloudinary(addressProof);
+
+    const newCompanySecretary = new companySecretary({
+      tcspLicenseNo,
+      tcspReason,
+      type,
+      surname,
+      name,
+      idProof: idProofUrl,
+      address,
+      addressProof: addressProofUrl,
+      email,
+      phone,
+      userId: mongoose.Types.ObjectId(userId),
+      companyId: mongoose.Types.ObjectId(companyId),
+    });
+
+    await newCompanySecretary.save();
+
+    res.status(201).json({ message: "Company secretary info created successfully!" });
+  } catch (error) {
+    console.error("Error creating company secretary info:", error);
+
+    if (error.code === 11000) {
+      return res
+        .status(400)
+        .json({ message: "Email already exists." });
+    }
+
+    res.status(500).json({ message: "Server error. Please try again later." });
+  }
+});
 
 
 

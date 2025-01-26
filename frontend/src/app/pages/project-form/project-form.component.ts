@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { SelectModule } from 'primeng/select';
@@ -8,6 +8,7 @@ import { TreeSelectModule } from 'primeng/treeselect';
 import { CompanyService } from '../../core/services/company.service';
 import Swal from 'sweetalert2';
 import { catchError, map, Observable, tap } from 'rxjs';
+import { Router } from '@angular/router';
 
 interface BuisnessNature {
   value: string;
@@ -38,15 +39,26 @@ export class ProjectFormComponent implements OnInit {
   activeTabIndex = 0;
   showForm:boolean = false;
   invateShareHolderForm:boolean = false
-  imagePreview: string | null = null; 
+  imagePreview: string | null = null;
+  imagePreviewDirectorsId: string | ArrayBuffer | null = null; 
+  imagePreviewDirectorsAddressProof: string | ArrayBuffer | null = null;
+  imagePreviewCompanySecretaryId: string | ArrayBuffer | null = null;
+  imagePreviewCompanySecretaryAddressProof: string | ArrayBuffer | null = null;
+  directorsInfoOpen:boolean = false
+  directorInvateOpen:boolean = false
   addressProofPreview: string | null = null;
   idProofPreview: string | ArrayBuffer | null = null; 
   companyInfoForm!: FormGroup;
   addShareForm!: FormGroup;
   shareHoldersForm!:FormGroup;
   inviteShareholderForm!:FormGroup
+  directorInformationForm!:FormGroup
+  InviteDirectorsForm!:FormGroup
+  comapnySecretaryForm!:FormGroup
+  selectedDirectorUserType: string = 'person';
   selectedNodes: string = "";
   selectedCountry = ""
+  private router = inject(Router)
   countries: any[] = [
     { name: 'Australia', code: 'AU' },
     { name: 'Brazil', code: 'BR' },
@@ -336,6 +348,9 @@ export class ProjectFormComponent implements OnInit {
     this.initializeAddSharesForm()
     this.initializeSharesHoldersForm()
     this.initializeInvateSharesHoldersForm()
+    this.initializeDirectorInfoForm()
+    this.initializeInvateDirectorForm()
+    this.initializeCompanySecretaryForm()
 
     this.companyInfoForm.get('country_Address')?.disable();
     this.companyInfoForm.get('presentorReferance')?.disable();
@@ -928,6 +943,356 @@ getErrorMessage3(controlName: string): string {
   }
   return '';
 }
+
+directorsInfoFormOpen(){
+  this.directorsInfoOpen = !this.directorsInfoOpen
+}
+
+
+
+initializeDirectorInfoForm(){
+ this.directorInformationForm = this.fb.group({
+  type: ['person', Validators.required], 
+  surname: ['', [Validators.required]],
+  name: ['', [Validators.required]],
+  idNo: ['', Validators.required],
+  idProof: [null, Validators.required],
+  address: ['', Validators.required],
+  addressProof: [null, Validators.required],
+  email: ['', [Validators.required, Validators.email]],
+  phone: ['', [Validators.required]],
+ })
+}
+
+getErrorMessage4(controlName: string): string {
+  const control = this.directorInformationForm.get(controlName);
+
+  if (control?.touched || control?.dirty) { 
+      if (control?.hasError('required')) {
+          return `${controlName} is required.`;
+      }
+      if (control?.hasError('email')) {
+          return `${controlName} must be a valid email address.`;
+      }
+  }
+  return '';
+}
+
+imagePreviewOnDirectorsIDProof(event: Event): void {
+  const file = (event.target as HTMLInputElement).files?.[0];
+  if (file) {
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      this.imagePreviewDirectorsId = e.target?.result as string | ArrayBuffer |null; 
+    };
+
+    reader.onloadend = () => {
+      const result = reader.result; 
+      if (typeof result === 'string') {
+        this.directorInformationForm.patchValue({
+          idProof: result, 
+        });
+        console.log('Base64 String:', result);
+      } else {
+        console.error('Result is not a string:', result); 
+      }
+    };
+
+    reader.readAsDataURL(file);
+  }
+}
+
+imagePreviewOnDirectorsAddressProof(event: Event): void {
+  const file = (event.target as HTMLInputElement).files?.[0];
+  if (file) {
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      this.imagePreviewDirectorsAddressProof = e.target?.result as string | ArrayBuffer |null; 
+    };
+
+    reader.onloadend = () => {
+      const result = reader.result; 
+      if (typeof result === 'string') {
+
+        this.directorInformationForm.patchValue({
+          addressProof: result, 
+        });
+        console.log('Base64 String:', result);
+      } else {
+        console.error('Result is not a string:', result); 
+      }
+    };
+
+    reader.readAsDataURL(file);
+  }
+}
+
+
+directorFormSubmission(){
+  console.log(this.directorInformationForm.value);
+
+  if (this.directorInformationForm.invalid) {
+    this.directorInformationForm.markAllAsTouched(); 
+    return; 
+  }
+
+  const userId = localStorage.getItem('userId');
+  const companyId = this.companyId;
+
+  const formData = {
+    ...this.directorInformationForm.value,
+    userId: userId, 
+    companyId: companyId
+  };
+
+  console.log(formData);
+  
+  this.companyService.DirectorInfoCreation(formData).subscribe({
+    next: (response) => {
+      console.log('Share creation successful:', response.message);
+      
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: response.message,
+        confirmButtonText: 'OK'
+      });
+
+      this.directorInformationForm.reset();
+      this.imagePreviewDirectorsAddressProof = null;
+      this.imagePreviewDirectorsId = null;
+    },
+    error: (error) => {
+      console.error('Error occurred during director information creation:', error);
+
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: error.message,
+        confirmButtonText: 'Retry'
+      });
+    }
+  });
+}
+
+openDirectorInvateForm(){
+  this.directorInvateOpen = !this.directorInvateOpen
+}
+
+
+initializeInvateDirectorForm(){
+  this.InviteDirectorsForm = this.fb.group({
+    name: ['', [Validators.required, Validators.minLength(3)]],
+    email: ['', [Validators.required, Validators.email]],
+    classOfShares: ['', Validators.required],
+    noOfShares: ['', [Validators.required, Validators.min(1)]],
+  });
+}
+
+getErrorMessage5(controlName: string): string {
+  const control = this.InviteDirectorsForm.get(controlName);
+  if (control && (control.touched || control.dirty)) {
+  if (control?.hasError('required')) {
+    return `${controlName} is required`;
+  }
+  if (control?.hasError('email')) {
+    return 'Enter a valid email address';
+  }
+  if (control?.hasError('minlength')) {
+    return `Minimum length is 3 characters`;
+  }
+  if (control?.hasError('min')) {
+    return `Value must be greater than 0`;
+  }
+}
+  return '';
+}
+
+invateDirectorSubmit(): void {
+  if (this.InviteDirectorsForm.valid) {
+    const userId = localStorage.getItem("userId");
+    const companyId = this.companyId;
+    const formData = this.InviteDirectorsForm.value;
+
+    const data = {
+      ...formData,
+      userId: userId,
+      companyId: companyId,
+    };
+
+    this.companyService.directorInviteCreation(data).subscribe({
+      next: (response) => {
+        console.log('director creation created',response);
+        
+        Swal.fire({
+          icon: "success",
+          title: "Invitation Sent!",
+          text: `The invitation to ${formData.name} has been sent successfully!`,
+          confirmButtonText: "OK",
+        });
+
+        this.InviteDirectorsForm.reset();
+      },
+      error: (error) => {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: error.message,
+          confirmButtonText: "Retry",
+        });
+      },
+    });
+  } else {
+    console.log("Form is invalid");
+  }
+}
+
+
+initializeCompanySecretaryForm() {
+  this.comapnySecretaryForm = this.fb.group({
+    tcspLicenseNo: ['', [Validators.required]],
+    tcspReason: ['', [Validators.required]],
+    type: ['person', Validators.required],
+    surname: ['', [Validators.required]],
+    name: ['', [Validators.required]],
+    idProof: ['', [Validators.required]],
+    address: ['', [Validators.required]],
+    addressProof: ['', [Validators.required]],
+    email: ['', [Validators.required, Validators.email]],
+    phone: ['', [Validators.required]],
+  });
+}
+
+
+comapnySecretarySubmission(){
+  console.log(this.comapnySecretaryForm.value);
+
+  if (this.comapnySecretaryForm.invalid) {
+    this.comapnySecretaryForm.markAllAsTouched(); 
+    return; 
+  }
+
+  const userId = localStorage.getItem('userId');
+  const companyId = this.companyId;
+
+  const formData = {
+    ...this.comapnySecretaryForm.value,
+    userId: userId, 
+    companyId: companyId
+  };
+
+  console.log(formData);
+  
+  this.companyService.companySecretaryCreation(formData).subscribe({
+    next: (response) => {
+      console.log('Company Secretary information successfully added:', response.message);
+      
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: response.message,
+        confirmButtonText: 'OK'
+      });
+
+      this.comapnySecretaryForm.reset();
+      this.router.navigate(['/summary'])
+      this.imagePreviewCompanySecretaryAddressProof = null;
+      this.imagePreviewCompanySecretaryId = null;
+    },
+    error: (error) => {
+      console.error('Error occurred during company Secretary information creation:', error);
+
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: error.message,
+        confirmButtonText: 'Retry'
+      });
+    }
+  });
+}
+
+
+imagePreviewOnCompanySecretaryIDProof(event:Event){
+  const file = (event.target as HTMLInputElement).files?.[0];
+  if (file) {
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      this.imagePreviewCompanySecretaryId = e.target?.result as string | ArrayBuffer |null; 
+    };
+
+    reader.onloadend = () => {
+      const result = reader.result; 
+      if (typeof result === 'string') {
+        this.comapnySecretaryForm.patchValue({
+          idProof: result, 
+        });
+        console.log('Base64 String:', result);
+      } else {
+        console.error('Result is not a string:', result); 
+      }
+    };
+
+    reader.readAsDataURL(file);
+  }
+}
+
+getErrorMessage6(controlName: string): string {
+  const control = this.comapnySecretaryForm.get(controlName);
+
+  const fieldNames: { [key: string]: string } = {
+    tcspLicenseNo: 'TCSP License Number',
+    tcspReason: 'TCSP Reason',
+    surname: 'Surname',
+    idProof: 'ID Proof',
+    address: 'Address',
+    addressProof: 'Address Proof',
+    email: 'Email',
+    phone: 'Phone',
+  };
+
+  if (control && (control.touched || control.dirty)) {
+    if (control.hasError('required')) {
+      return `${fieldNames[controlName]} is required`;
+    }
+    if (control.hasError('email')) {
+      return 'Enter a valid email address';
+    }
+  }
+  return '';
+}
+
+
+imagePreviewOnCompanySecretaryAddressProof(event: Event): void {
+  const file = (event.target as HTMLInputElement).files?.[0];
+  if (file) {
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      this.imagePreviewCompanySecretaryAddressProof = e.target?.result as string | ArrayBuffer |null; 
+    };
+
+    reader.onloadend = () => {
+      const result = reader.result; 
+      if (typeof result === 'string') {
+        this.comapnySecretaryForm.patchValue({
+          addressProof: result, 
+        });
+        console.log('Base64 String:', result);
+      } else {
+        console.error('Result is not a string:', result); 
+      }
+    };
+
+    reader.readAsDataURL(file);
+  }
+}
+
+
+
 
 }
 

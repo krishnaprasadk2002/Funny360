@@ -1253,42 +1253,103 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <tr *ngFor="let share of shareCapitalList" class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted" [attr.data-id]="share._id">
-                                <td class="p-4 align-middle">{{ share.capital.share_class }}</td>
-                                <td class="p-4 align-middle">{{ share.capital.total_share }}</td>
-                                <td class="p-4 align-middle">HKD</td>
-                                <td class="p-4 align-middle">{{ share.capital.amount_share }}</td>
-                                <td class="p-4 align-middle">{{ share.capital.total_share * share.capital.amount_share }}</td>
+                              <tr
+                                *ngFor="let share of shareCapitalList"
+                                class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
+                                [attr.data-id]="share._id"
+                              >
                                 <td class="p-4 align-middle">
-                                  <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-primary underline-offset-4 hover:underline h-10 px-4 py-2">
+                                  {{ share.capital.share_class }}
+                                </td>
+                                <td class="p-4 align-middle">
+                                  {{ share.capital.total_share }}
+                                </td>
+                                <td class="p-4 align-middle">HKD</td>
+                                <td class="p-4 align-middle">
+                                  {{ share.capital.amount_share }}
+                                </td>
+                                <td class="p-4 align-middle">
+                                  {{
+                                    share.capital.total_share *
+                                      share.capital.amount_share
+                                  }}
+                                </td>
+                                <td class="p-4 align-middle">
+                                  <button
+                                    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-primary underline-offset-4 hover:underline h-10 px-4 py-2"
+                                  >
                                     {{ share.capital.total_capital_subscribed }}
                                   </button>
                                 </td>
-                                <td class="p-4 align-middle">{{ share.capital.unpaid_amount }}</td>
-                                <td class="p-4 align-middle">{{ share.capital.share_right }}</td>
                                 <td class="p-4 align-middle">
-                                  <button class="inline-flex items-center justify-center border border-input bg-transparent hover:bg-accent hover:text-accent-foreground h-10 w-10" (click)="editShareCapitalList($event)">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                      <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path>
+                                  {{ share.capital.unpaid_amount }}
+                                </td>
+                                <td class="p-4 align-middle">
+                                  {{ share.capital.share_right }}
+                                </td>
+                                <td class="p-4 align-middle">
+                                  <button
+                                    class="inline-flex items-center justify-center border border-input bg-transparent hover:bg-accent hover:text-accent-foreground h-10 w-10"
+                                    (click)="editShareCapitalList($event)"
+                                  >
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="24"
+                                      height="24"
+                                      viewBox="0 0 24 24"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      stroke-width="2"
+                                      stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                    >
+                                      <path
+                                        d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"
+                                      ></path>
                                       <path d="m15 5 4 4"></path>
                                     </svg>
                                   </button>
                                 </td>
                                 <td class="p-4 align-middle">
-                                  <button class="inline-flex items-center justify-center bg-destructive text-destructive-foreground hover:bg-destructive/90 h-10 w-10" (click)="deleteShareCapitalList(share._id)">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                  <button
+                                    class="inline-flex items-center justify-center bg-destructive text-destructive-foreground hover:bg-destructive/90 h-10 w-10"
+                                    (click)="deleteShareCapitalList(share._id)"
+                                  >
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="24"
+                                      height="24"
+                                      viewBox="0 0 24 24"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      stroke-width="2"
+                                      stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                    >
                                       <path d="M3 6h18"></path>
-                                      <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
-                                      <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
-                                      <line x1="10" x2="10" y1="11" y2="17"></line>
-                                      <line x1="14" x2="14" y1="11" y2="17"></line>
+                                      <path
+                                        d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"
+                                      ></path>
+                                      <path
+                                        d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"
+                                      ></path>
+                                      <line
+                                        x1="10"
+                                        x2="10"
+                                        y1="11"
+                                        y2="17"
+                                      ></line>
+                                      <line
+                                        x1="14"
+                                        x2="14"
+                                        y1="11"
+                                        y2="17"
+                                      ></line>
                                     </svg>
                                   </button>
                                 </td>
                               </tr>
                             </tbody>
-                            
-                            
                           </table>
                         </div>
                       </div>
@@ -1441,7 +1502,9 @@
                                     getErrorMessage1('total_shares_proposed')
                                   "
                                 >
-                                  {{ getErrorMessage1("total_shares_proposed") }}
+                                  {{
+                                    getErrorMessage1("total_shares_proposed")
+                                  }}
                                 </div>
                               </div>
                             </td>
@@ -1577,7 +1640,9 @@
                                     getErrorMessage1('particulars_of_rights')
                                   "
                                 >
-                                  {{ getErrorMessage1("particulars_of_rights") }}
+                                  {{
+                                    getErrorMessage1("particulars_of_rights")
+                                  }}
                                 </div>
                               </div>
                             </td>
@@ -1640,61 +1705,205 @@
                   >
                     <div class="relative w-full overflow-auto">
                       <table class="w-full caption-bottom text-sm">
-                        <caption class="sr-only">Shareholder Information</caption>
+                        <caption class="sr-only">
+                          Shareholder Information
+                        </caption>
                         <thead class="[&amp;_tr]:border-b">
-                          <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                            <th scope="col" class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">Person/Company</th>
-                            <th scope="col" class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">Surname</th>
-                            <th scope="col" class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">Name</th>
-                            <th scope="col" class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">ID/Company No.</th>
-                            <th scope="col" class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">Address</th>
-                            <th scope="col" class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">Email</th>
-                            <th scope="col" class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">Phone</th>
+                          <tr
+                            class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
+                          >
+                            <th
+                              scope="col"
+                              class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                            >
+                              Person/Company
+                            </th>
+                            <th
+                              scope="col"
+                              class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                            >
+                              Surname
+                            </th>
+                            <th
+                              scope="col"
+                              class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                            >
+                              Name
+                            </th>
+                            <th
+                              scope="col"
+                              class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                            >
+                              ID/Company No.
+                            </th>
+                            <th
+                              scope="col"
+                              class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                            >
+                              Address
+                            </th>
+                            <th
+                              scope="col"
+                              class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                            >
+                              Email
+                            </th>
+                            <th
+                              scope="col"
+                              class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                            >
+                              Phone
+                            </th>
                             <th scope="col" class="hidden">Class of Shares</th>
                             <th scope="col" class="hidden">No. of Shares</th>
-                            <th scope="col" class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">Share Details</th>
-                            <th scope="col" class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">Edit</th>
-                            <th scope="col" class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">Delete</th>
+                            <th
+                              scope="col"
+                              class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                            >
+                              Share Details
+                            </th>
+                            <th
+                              scope="col"
+                              class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                            >
+                              Edit
+                            </th>
+                            <th
+                              scope="col"
+                              class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
+                            >
+                              Delete
+                            </th>
                           </tr>
                         </thead>
                         <tbody>
-                          <ng-container *ngFor="let shareholder of shareholders">
-                            <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                              <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{ shareholder.userType }}</td>
-                              <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{ shareholder.surname }}</td>
-                              <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{ shareholder.name }}</td>
-                              <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{ shareholder.idNo }}</td>
-                              <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{ shareholder.address }}</td>
-                              <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{ shareholder.email }}</td>
-                              <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">{{ shareholder.phone }}</td>
-                              <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                                <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-:rj7:">
+                          <ng-container
+                            *ngFor="let shareholder of shareholders"
+                          >
+                            <tr
+                              class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
+                            >
+                              <td
+                                class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0"
+                              >
+                                {{ shareholder.userType }}
+                              </td>
+                              <td
+                                class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0"
+                              >
+                                {{ shareholder.surname }}
+                              </td>
+                              <td
+                                class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0"
+                              >
+                                {{ shareholder.name }}
+                              </td>
+                              <td
+                                class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0"
+                              >
+                                {{ shareholder.idNo }}
+                              </td>
+                              <td
+                                class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0"
+                              >
+                                {{ shareholder.address }}
+                              </td>
+                              <td
+                                class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0"
+                              >
+                                {{ shareholder.email }}
+                              </td>
+                              <td
+                                class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0"
+                              >
+                                {{ shareholder.phone }}
+                              </td>
+                              <td
+                                class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0"
+                              >
+                                <button
+                                  class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+                                  type="button"
+                                  aria-haspopup="dialog"
+                                  aria-expanded="false"
+                                  aria-controls="radix-:rj7:"
+                                >
                                   View Shares
                                 </button>
                               </td>
-                              <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                                <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-transparent hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2" aria-label="Edit shareholder details">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil" aria-hidden="true">
-                                    <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path>
+                              <td
+                                class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0"
+                              >
+                                <button
+                                  class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-transparent hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+                                  aria-label="Edit shareholder details"
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="lucide lucide-pencil"
+                                    aria-hidden="true"
+                                  >
+                                    <path
+                                      d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"
+                                    ></path>
                                     <path d="m15 5 4 4"></path>
                                   </svg>
                                 </button>
                               </td>
-                              <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                                <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-destructive text-destructive-foreground hover:bg-destructive/90 h-10 px-4 py-2" aria-label="Delete shareholder">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2" aria-hidden="true">
+                              <td
+                                class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0"
+                              >
+                                <button
+                                  class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-destructive text-destructive-foreground hover:bg-destructive/90 h-10 px-4 py-2"
+                                  aria-label="Delete shareholder"
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="lucide lucide-trash2"
+                                    aria-hidden="true"
+                                  >
                                     <path d="M3 6h18"></path>
-                                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
-                                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
-                                    <line x1="10" x2="10" y1="11" y2="17"></line>
-                                    <line x1="14" x2="14" y1="11" y2="17"></line>
+                                    <path
+                                      d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"
+                                    ></path>
+                                    <path
+                                      d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"
+                                    ></path>
+                                    <line
+                                      x1="10"
+                                      x2="10"
+                                      y1="11"
+                                      y2="17"
+                                    ></line>
+                                    <line
+                                      x1="14"
+                                      x2="14"
+                                      y1="11"
+                                      y2="17"
+                                    ></line>
                                   </svg>
                                 </button>
                               </td>
                             </tr>
                           </ng-container>
                         </tbody>
-                      </table>                      
+                      </table>
                     </div>
                   </div>
                   <div
@@ -1889,11 +2098,11 @@
                                           formControlName="surname"
                                         />
                                         <div
-                                        class="error-message"
-                                        *ngIf="getErrorMessage2('surname')"
-                                      >
-                                        {{ getErrorMessage2("surname") }}
-                                      </div>
+                                          class="error-message"
+                                          *ngIf="getErrorMessage2('surname')"
+                                        >
+                                          {{ getErrorMessage2("surname") }}
+                                        </div>
                                       </div>
                                     </td>
                                     <td
@@ -1911,11 +2120,11 @@
                                           formControlName="name"
                                         />
                                         <div
-                                        class="error-message"
-                                        *ngIf="getErrorMessage2('name')"
-                                      >
-                                        {{ getErrorMessage2("name") }}
-                                      </div>
+                                          class="error-message"
+                                          *ngIf="getErrorMessage2('name')"
+                                        >
+                                          {{ getErrorMessage2("name") }}
+                                        </div>
                                       </div>
                                     </td>
                                     <td
@@ -1933,11 +2142,11 @@
                                           formControlName="idNo"
                                         />
                                         <div
-                                        class="error-message"
-                                        *ngIf="getErrorMessage2('idNo')"
-                                      >
-                                        {{ getErrorMessage2("idNo") }}
-                                      </div>
+                                          class="error-message"
+                                          *ngIf="getErrorMessage2('idNo')"
+                                        >
+                                          {{ getErrorMessage2("idNo") }}
+                                        </div>
                                       </div>
                                       <div class="space-y-2">
                                         <input
@@ -1946,12 +2155,20 @@
                                           type="file"
                                           name="idProof"
                                           formControlName="idProof"
-                                          (change)="onSelectIDProofImage($event)"
+                                          (change)="
+                                            onSelectIDProofImage($event)
+                                          "
                                         />
-                                        <div class="error-message" *ngIf="getErrorMessage2('idProof')">
+                                        <div
+                                          class="error-message"
+                                          *ngIf="getErrorMessage2('idProof')"
+                                        >
                                           {{ getErrorMessage2("idProof") }}
                                         </div>
-                                        <div *ngIf="idProofPreview" class="mt-2">
+                                        <div
+                                          *ngIf="idProofPreview"
+                                          class="mt-2"
+                                        >
                                           <img
                                             [src]="idProofPreview"
                                             alt="ID Proof Preview"
@@ -2018,11 +2235,11 @@
                                           formControlName="address"
                                         />
                                         <div
-                                  class="error-message"
-                                  *ngIf="getErrorMessage2('address')"
-                                >
-                                  {{ getErrorMessage2("address") }}
-                                </div>
+                                          class="error-message"
+                                          *ngIf="getErrorMessage2('address')"
+                                        >
+                                          {{ getErrorMessage2("address") }}
+                                        </div>
                                       </div>
                                       <div class="space-y-2">
                                         <input
@@ -2031,20 +2248,29 @@
                                           type="file"
                                           name="addressProof"
                                           formControlName="addressProof"
-                                          (change)="onImageSelectedAddress($event)"
+                                          (change)="
+                                            onImageSelectedAddress($event)
+                                          "
                                         />
-                                        <div class="error-message" *ngIf="getErrorMessage2('addressProof')">
+                                        <div
+                                          class="error-message"
+                                          *ngIf="
+                                            getErrorMessage2('addressProof')
+                                          "
+                                        >
                                           {{ getErrorMessage2("addressProof") }}
                                         </div>
-                                        <div *ngIf="addressProofPreview" class="mt-2">
+                                        <div
+                                          *ngIf="addressProofPreview"
+                                          class="mt-2"
+                                        >
                                           <img
-                                            [src]="addressProofPreview" 
-                                            alt="Address Proof Preview" 
+                                            [src]="addressProofPreview"
+                                            alt="Address Proof Preview"
                                             class="h-20 w-20 object-cover rounded-md"
                                           />
                                         </div>
                                       </div>
-                                      
                                     </td>
                                     <td
                                       class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0"
@@ -2062,11 +2288,11 @@
                                           formControlName="email"
                                         />
                                         <div
-                                        class="error-message"
-                                        *ngIf="getErrorMessage2('email')"
-                                      >
-                                        {{ getErrorMessage2("email") }}
-                                      </div>
+                                          class="error-message"
+                                          *ngIf="getErrorMessage2('email')"
+                                        >
+                                          {{ getErrorMessage2("email") }}
+                                        </div>
                                       </div>
                                     </td>
                                     <td
@@ -2138,11 +2364,11 @@
                                             formControlName="phone"
                                           />
                                           <div
-                                        class="error-message"
-                                        *ngIf="getErrorMessage2('phone')"
-                                      >
-                                        {{ getErrorMessage2("phone") }}
-                                      </div>
+                                            class="error-message"
+                                            *ngIf="getErrorMessage2('phone')"
+                                          >
+                                            {{ getErrorMessage2("phone") }}
+                                          </div>
                                         </div>
                                       </div>
                                     </td>
@@ -2233,11 +2459,19 @@
                                             </option>
                                           </select>
                                           <div
-                                        class="error-message"
-                                        *ngIf="getErrorMessage2('shareDetailsClassOfShares')"
-                                      >
-                                        {{ getErrorMessage2("shareDetailsClassOfShares") }}
-                                      </div>
+                                            class="error-message"
+                                            *ngIf="
+                                              getErrorMessage2(
+                                                'shareDetailsClassOfShares'
+                                              )
+                                            "
+                                          >
+                                            {{
+                                              getErrorMessage2(
+                                                "shareDetailsClassOfShares"
+                                              )
+                                            }}
+                                          </div>
                                         </div>
                                       </div>
                                     </td>
@@ -2252,11 +2486,19 @@
                                         formControlName="shareDetailsNoOfShares"
                                       />
                                       <div
-                                      class="error-message"
-                                      *ngIf="getErrorMessage2('shareDetailsNoOfShares')"
-                                    >
-                                      {{ getErrorMessage2("shareDetailsNoOfShares") }}
-                                    </div>
+                                        class="error-message"
+                                        *ngIf="
+                                          getErrorMessage2(
+                                            'shareDetailsNoOfShares'
+                                          )
+                                        "
+                                      >
+                                        {{
+                                          getErrorMessage2(
+                                            "shareDetailsNoOfShares"
+                                          )
+                                        }}
+                                      </div>
                                     </td>
                                     <td
                                       class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0"
@@ -2319,7 +2561,7 @@
                     </div>
                     <div class="flex items-center space-x-2 py-6">
                       <button
-                      (click)="invateShareHoldersButton()"
+                        (click)="invateShareHoldersButton()"
                         type="button"
                         role="radio"
                         aria-checked="false"
@@ -2336,7 +2578,7 @@
                         >Invite a Shareholder to fill in the details.</label
                       >
                     </div>
-                    <div  *ngIf="invateShareHolderForm">
+                    <div *ngIf="invateShareHolderForm">
                       <div
                         class="rounded-lg border bg-card text-card-foreground shadow-sm"
                       >
@@ -2352,7 +2594,11 @@
                           </p>
                         </div>
                         <div class="p-6 pt-0">
-                          <form class="space-y-8" [formGroup]="inviteShareholderForm" (ngSubmit)="invateShareHoldersSubmit()">
+                          <form
+                            class="space-y-8"
+                            [formGroup]="inviteShareholderForm"
+                            (ngSubmit)="invateShareHoldersSubmit()"
+                          >
                             <div class="relative w-full overflow-auto">
                               <table class="w-full caption-bottom text-sm">
                                 <thead class="[&amp;_tr]:border-b">
@@ -2397,11 +2643,11 @@
                                           formControlName="name"
                                         />
                                         <div
-                                        class="error-message"
-                                        *ngIf="getErrorMessage3('name')"
-                                      >
-                                        {{ getErrorMessage3("name") }}
-                                      </div>
+                                          class="error-message"
+                                          *ngIf="getErrorMessage3('name')"
+                                        >
+                                          {{ getErrorMessage3("name") }}
+                                        </div>
                                       </div>
                                     </td>
                                     <td
@@ -2419,11 +2665,11 @@
                                           formControlName="email"
                                         />
                                         <div
-                                        class="error-message"
-                                        *ngIf="getErrorMessage3('email')"
-                                      >
-                                        {{ getErrorMessage3("email") }}
-                                      </div>
+                                          class="error-message"
+                                          *ngIf="getErrorMessage3('email')"
+                                        >
+                                          {{ getErrorMessage3("email") }}
+                                        </div>
                                       </div>
                                     </td>
                                   </tr>
@@ -2486,40 +2732,44 @@
                                     <td
                                       class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0"
                                     >
-                                    <div class="space-y-2">
-                                      <div>
-                                        <select
-                                          id="classOfShares"
-                                          formControlName="classOfShares"
-                                          class="flex h-10 w-full items-center rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                        >
-                                          <option value="">
-                                            Select Class of Shares
-                                          </option>
-                                          <option value="Ordinary">
-                                            Ordinary
-                                          </option>
-                                          <option value="Preferance">
-                                            Preference
-                                          </option>
-                                          <option value="Ordinary Class 1">
-                                            Ordinary Class 1
-                                          </option>
-                                          <option value="Ordinary Class 10">
-                                            Ordinary Class 10
-                                          </option>
-                                          <option value="Ordinary12">
-                                            Ordinary 12
-                                          </option>
-                                        </select>
-                                        <div
-                                      class="error-message"
-                                      *ngIf="getErrorMessage3('classOfShares')"
-                                    >
-                                      {{ getErrorMessage3("classOfShares") }}
-                                    </div>
+                                      <div class="space-y-2">
+                                        <div>
+                                          <select
+                                            id="classOfShares"
+                                            formControlName="classOfShares"
+                                            class="flex h-10 w-full items-center rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                          >
+                                            <option value="">
+                                              Select Class of Shares
+                                            </option>
+                                            <option value="Ordinary">
+                                              Ordinary
+                                            </option>
+                                            <option value="Preferance">
+                                              Preference
+                                            </option>
+                                            <option value="Ordinary Class 1">
+                                              Ordinary Class 1
+                                            </option>
+                                            <option value="Ordinary Class 10">
+                                              Ordinary Class 10
+                                            </option>
+                                            <option value="Ordinary12">
+                                              Ordinary 12
+                                            </option>
+                                          </select>
+                                          <div
+                                            class="error-message"
+                                            *ngIf="
+                                              getErrorMessage3('classOfShares')
+                                            "
+                                          >
+                                            {{
+                                              getErrorMessage3("classOfShares")
+                                            }}
+                                          </div>
+                                        </div>
                                       </div>
-                                    </div>
                                     </td>
                                     <td
                                       class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0"
@@ -2532,18 +2782,19 @@
                                         formControlName="noOfShares"
                                       />
                                       <div
-                                      class="error-message"
-                                      *ngIf="getErrorMessage3('noOfShares')"
-                                    >
-                                      {{ getErrorMessage3("noOfShares") }}
-                                    </div>
+                                        class="error-message"
+                                        *ngIf="getErrorMessage3('noOfShares')"
+                                      >
+                                        {{ getErrorMessage3("noOfShares") }}
+                                      </div>
                                     </td>
                                     <td
                                       class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0"
                                     >
                                       <button
                                         class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-destructive text-destructive-foreground hover:bg-destructive/90 h-10 px-4 py-2"
-                                        type="button" (click)="clearInvateShareHoldersForm()"
+                                        type="button"
+                                        (click)="clearInvateShareHoldersForm()"
                                       >
                                         <svg
                                           xmlns="http://www.w3.org/2000/svg"
@@ -3015,6 +3266,7 @@
                   >
                     <div class="flex items-center space-x-2 py-6">
                       <button
+                        (click)="directorsInfoFormOpen()"
                         type="button"
                         role="radio"
                         aria-checked="false"
@@ -3031,7 +3283,7 @@
                         >Fill in all the information for this Director</label
                       >
                     </div>
-                    <div class="hidden">
+                    <div *ngIf="directorsInfoOpen">
                       <div
                         class="rounded-lg border bg-card text-card-foreground shadow-sm"
                       >
@@ -3046,7 +3298,11 @@
                           </p>
                         </div>
                         <div class="p-6 pt-0 space-y-6">
-                          <form class="space-y-8">
+                          <form
+                            class="space-y-8"
+                            [formGroup]="directorInformationForm"
+                            (ngSubmit)="directorFormSubmission()"
+                          >
                             <div class="relative w-full overflow-auto">
                               <table class="w-full caption-bottom text-sm">
                                 <thead class="[&amp;_tr]:border-b">
@@ -3097,114 +3353,86 @@
                                   >
                                     <td
                                       class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0"
-                                    >
-                                      <div class="space-y-2">
-                                        <div
-                                          role="radiogroup"
-                                          aria-required="false"
-                                          dir="ltr"
-                                          class="flex justify-start items-center gap-10"
-                                          id=":rl0:-form-item"
-                                          aria-describedby=":rl0:-form-item-description"
-                                          aria-invalid="false"
-                                          tabindex="0"
-                                          style="outline: none"
+                                    >  <div class="space-y-2">
+                                      <label
+                                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 inline-flex items-center gap-2"
+                                      >
+                                        <span>Select User Type:</span>
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          width="20"
+                                          height="20"
+                                          viewBox="0 0 24 24"
+                                          fill="none"
+                                          stroke="currentColor"
+                                          stroke-width="2"
+                                          stroke-linecap="round"
+                                          stroke-linejoin="round"
+                                          class="lucide lucide-info"
+                                          data-state="closed"
                                         >
-                                          <div
-                                            class="flex items-center space-x-3 space-y-0"
+                                          <circle
+                                            cx="12"
+                                            cy="12"
+                                            r="10"
+                                          ></circle>
+                                          <path d="M12 16v-4"></path>
+                                          <path d="M12 8h.01"></path>
+                                        </svg>
+                                      </label>
+                                      <div
+                                        role="radiogroup"
+                                        class="flex justify-start items-center gap-5"
+                                      >
+                                        <!-- Person Radio Button -->
+                                        <div
+                                          class="space-y-1 flex items-center"
+                                        >
+                                          <label
+                                            class="flex items-center gap-2"
                                           >
-                                            <button
-                                              type="button"
-                                              role="radio"
-                                              aria-checked="true"
-                                              data-state="checked"
+                                            <input
+                                              type="radio"
+                                              formControlName="type"
+                                              class="bg-transparent hidden peer"
                                               value="person"
-                                              class="aspect-square h-4 w-4 rounded-full border border-primary text-primary ring-offset-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                              id=":rl1:-form-item"
-                                              aria-describedby=":rl1:-form-item-description"
-                                              aria-invalid="false"
-                                              tabindex="-1"
-                                              data-radix-collection-item=""
+                                            />
+                                            <span
+                                              class="w-5 h-5 border rounded-full flex items-center justify-center peer-checked:bg-blue-600 peer-checked:border-transparent"
                                             >
                                               <span
-                                                data-state="checked"
-                                                class="flex items-center justify-center"
-                                                ><svg
-                                                  xmlns="http://www.w3.org/2000/svg"
-                                                  width="24"
-                                                  height="24"
-                                                  viewBox="0 0 24 24"
-                                                  fill="none"
-                                                  stroke="currentColor"
-                                                  stroke-width="2"
-                                                  stroke-linecap="round"
-                                                  stroke-linejoin="round"
-                                                  class="lucide lucide-circle h-2.5 w-2.5 fill-current text-current"
-                                                >
-                                                  <circle
-                                                    cx="12"
-                                                    cy="12"
-                                                    r="10"
-                                                  ></circle></svg
-                                              ></span></button
-                                            ><input
-                                              aria-hidden="true"
-                                              tabindex="-1"
-                                              type="radio"
-                                              value="person"
-                                              checked=""
-                                              style="
-                                                transform: translateX(-100%);
-                                                position: absolute;
-                                                pointer-events: none;
-                                                opacity: 0;
-                                                margin: 0px;
-                                                width: 0px;
-                                                height: 0px;
-                                              "
-                                            /><label
-                                              class="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 font-normal"
-                                              for=":rl1:-form-item"
-                                              >Person</label
-                                            >
-                                          </div>
-                                          <div
-                                            class="flex items-center space-x-3 space-y-0"
+                                                class="w-3 h-3 rounded-full bg-white peer-checked:block hidden"
+                                              ></span>
+                                            </span>
+                                            Person
+                                          </label>
+                                        </div>
+                                        <!-- Company Radio Button -->
+                                        <div
+                                          class="space-y-1 flex items-center"
+                                        >
+                                          <label
+                                            class="flex items-center gap-2"
                                           >
-                                            <button
-                                              type="button"
-                                              role="radio"
-                                              aria-checked="false"
-                                              data-state="unchecked"
-                                              value="company"
-                                              class="aspect-square h-4 w-4 rounded-full border border-primary text-primary ring-offset-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                              id=":rl3:-form-item"
-                                              aria-describedby=":rl3:-form-item-description"
-                                              aria-invalid="false"
-                                              tabindex="-1"
-                                              data-radix-collection-item=""
-                                            ></button
-                                            ><input
-                                              aria-hidden="true"
-                                              tabindex="-1"
+                                            <input
                                               type="radio"
+                                              formControlName="type"
+                                              class="bg-transparent hidden peer"
                                               value="company"
-                                              style="
-                                                transform: translateX(-100%);
-                                                position: absolute;
-                                                pointer-events: none;
-                                                opacity: 0;
-                                                margin: 0px;
-                                                width: 0px;
-                                                height: 0px;
-                                              "
-                                            /><label
-                                              class="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 font-normal"
-                                              >Company</label
+                                            />
+                                            <span
+                                              class="w-5 h-5 border rounded-full flex items-center justify-center peer-checked:bg-blue-600 peer-checked:border-transparent"
                                             >
-                                          </div>
+                                              <span
+                                                class="w-3 h-3 rounded-full bg-white peer-checked:block hidden"
+                                              ></span>
+                                            </span>
+                                            Company
+                                          </label>
                                         </div>
                                       </div>
+                                    </div>
+                                    
                                     </td>
                                     <td
                                       class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0"
@@ -3217,7 +3445,18 @@
                                           aria-describedby=":rl5:-form-item-description"
                                           aria-invalid="false"
                                           name="surname"
+                                          formControlName="surname"
                                         />
+                                        <div
+                                        class="error-message"
+                                        *ngIf="
+                                          getErrorMessage4('surname')
+                                        "
+                                      >
+                                        {{
+                                          getErrorMessage4("surname")
+                                        }}
+                                      </div>
                                       </div>
                                     </td>
                                     <td
@@ -3232,7 +3471,18 @@
                                           aria-invalid="false"
                                           value=""
                                           name="name"
+                                          formControlName="name"
                                         />
+                                        <div
+                                        class="error-message"
+                                        *ngIf="
+                                          getErrorMessage4('name')
+                                        "
+                                      >
+                                        {{
+                                          getErrorMessage4("name")
+                                        }}
+                                      </div>
                                       </div>
                                     </td>
                                     <td
@@ -3247,7 +3497,20 @@
                                           aria-invalid="false"
                                           value=""
                                           name="idNo"
+                                          formControlName="idNo"
                                         />
+                                        <div
+                                        class="error-message"
+                                        *ngIf="
+                                          getErrorMessage4('idNo')
+                                        "
+                                      >
+                                        {{
+                                          getErrorMessage4("idNo")
+                                        }}
+                                      </div>
+                                        
+
                                       </div>
                                       <div class="space-y-2">
                                         <input
@@ -3256,10 +3519,27 @@
                                           id=":rl8:-form-item"
                                           aria-describedby=":rl8:-form-item-description"
                                           aria-invalid="false"
-                                          type="File"
+                                          type="file"
+                                          accept="image/*"
                                           name="idProof"
+                                          formControlName="idProof" 
+                                          (change)="imagePreviewOnDirectorsIDProof($event)"
                                         />
+                                      
+                                        <div class="error-message" *ngIf="getErrorMessage4('idProof')">
+                                          {{ getErrorMessage4('idProof') }}
+                                        </div>
+                                      
+                                        <!-- Preview Image -->
+                                        <div *ngIf="imagePreviewDirectorsId" class="mt-4">
+                                          <img
+                                            [src]="imagePreviewDirectorsId"
+                                            alt="ID Proof Preview"
+                                            class="h-32 w-32 rounded-md border"
+                                          />
+                                        </div>
                                       </div>
+                                      
                                     </td>
                                   </tr>
                                 </tbody>
@@ -3316,18 +3596,34 @@
                                           aria-invalid="false"
                                           value=""
                                           name="address"
+                                          formControlName="address"
                                         />
+                                        <div
+                                        class="error-message"
+                                        *ngIf="
+                                          getErrorMessage4('address')
+                                        "
+                                      >
+                                        {{
+                                          getErrorMessage4("address")
+                                        }}
+                                      </div>
                                       </div>
                                       <div class="space-y-2">
                                         <input
-                                          class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                          placeholder="Upload a Copy"
-                                          id=":rla:-form-item"
-                                          aria-describedby=":rla:-form-item-description"
-                                          aria-invalid="false"
-                                          type="File"
-                                          name="addressProof"
+                                        class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                          type="file"
+                                          accept="image/*"
+                                          formControlName="addressProof"
+                                          (change)="imagePreviewOnDirectorsAddressProof($event)"
                                         />
+                                        <div *ngIf="imagePreviewDirectorsAddressProof">
+                                          <img
+                                            [src]="imagePreviewDirectorsAddressProof"
+                                            alt="Address Proof Preview"
+                                            class="h-32 w-32 rounded-md border"
+                                          />
+                                        </div>
                                       </div>
                                     </td>
                                     <td
@@ -3343,7 +3639,18 @@
                                           type="email"
                                           value=""
                                           name="email"
+                                          formControlName="email"
                                         />
+                                        <div
+                                        class="error-message"
+                                        *ngIf="
+                                          getErrorMessage4('email')
+                                        "
+                                      >
+                                        {{
+                                          getErrorMessage4("email")
+                                        }}
+                                      </div>
                                       </div>
                                     </td>
                                     <td
@@ -3408,7 +3715,18 @@
                                             type="tel"
                                             value=""
                                             name="phone"
+                                            formControlName="phone"
                                           />
+                                          <div
+                                        class="error-message"
+                                        *ngIf="
+                                          getErrorMessage4('phone')
+                                        "
+                                      >
+                                        {{
+                                          getErrorMessage4("phone")
+                                        }}
+                                      </div>
                                         </div>
                                       </div>
                                     </td>
@@ -3420,6 +3738,7 @@
                               <button
                                 class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 my-4"
                                 type="submit"
+                                [disabled]="this.directorInformationForm.invalid"
                               >
                                 Add Director
                               </button>
@@ -3430,15 +3749,13 @@
                     </div>
                     <div class="flex items-center space-x-2 py-6">
                       <button
-                        type="button"
-                        role="radio"
-                        aria-checked="false"
-                        data-state="unchecked"
-                        value="invite"
-                        class="aspect-square h-4 w-4 rounded-full border border-primary text-primary ring-offset-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                        id="r2"
-                        tabindex="-1"
-                        data-radix-collection-item=""
+                      (click)="openDirectorInvateForm()"
+                      type="button"
+                      role="radio"
+                      aria-checked="false"
+                      class="aspect-square h-4 w-4 rounded-full border border-primary text-primary ring-offset-background focus:outline-none ..."
+                      id="r2"
+                      tabindex="-1"
                       ></button
                       ><label
                         class="font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-2xl"
@@ -3446,7 +3763,7 @@
                         >Invite a Director to fill in the details.</label
                       >
                     </div>
-                    <div class="hidden">
+                    <div *ngIf="directorInvateOpen">
                       <div
                         class="rounded-lg border bg-card text-card-foreground shadow-sm"
                       >
@@ -3462,74 +3779,69 @@
                           </p>
                         </div>
                         <div class="p-6 pt-0">
-                          <form class="space-y-8">
+                          <form [formGroup]="InviteDirectorsForm" (ngSubmit)="invateDirectorSubmit()" class="space-y-8">
                             <div class="relative w-full overflow-auto">
                               <table class="w-full caption-bottom text-sm">
                                 <thead class="[&amp;_tr]:border-b">
-                                  <tr
-                                    class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
-                                  >
-                                    <th
-                                      class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
-                                    >
-                                      <label
-                                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                        for="name"
-                                        >Name</label
-                                      >
+                                  <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                      <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="name">Name</label>
                                     </th>
-                                    <th
-                                      class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0"
-                                    >
-                                      <label
-                                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                        for="email"
-                                        >Email</label
-                                      >
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                      <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="email">Email</label>
                                     </th>
                                   </tr>
                                 </thead>
                                 <tbody class="[&amp;_tr:last-child]:border-0">
-                                  <tr
-                                    class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
-                                  >
-                                    <td
-                                      class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0"
-                                    >
+                                  <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
                                       <div class="space-y-2">
                                         <input
                                           class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                                           placeholder="Name Eg: James"
-                                          id=":rlf:-form-item"
-                                          aria-describedby=":rlf:-form-item-description"
-                                          aria-invalid="false"
-                                          name="name"
+                                          id="name"
+                                          formControlName="name"
                                         />
+                                        <div
+                                            class="error-message"
+                                            *ngIf="
+                                              getErrorMessage5('name')
+                                            "
+                                          >
+                                            {{
+                                              getErrorMessage5("name")
+                                            }}
+                                          </div>
                                       </div>
                                     </td>
-                                    <td
-                                      class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0"
-                                    >
+                                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
                                       <div class="space-y-2">
                                         <input
                                           class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                                           placeholder="Eg: xyz@email.com"
-                                          id=":rlg:-form-item"
-                                          aria-describedby=":rlg:-form-item-description"
-                                          aria-invalid="false"
+                                          id="email"
                                           type="email"
-                                          name="email"
+                                          formControlName="email"
                                         />
+                                        <div
+                                            class="error-message"
+                                            *ngIf="
+                                              getErrorMessage5('email')
+                                            "
+                                          >
+                                            {{
+                                              getErrorMessage5("email")
+                                            }}
+                                          </div>
                                       </div>
                                     </td>
                                   </tr>
                                 </tbody>
                               </table>
                             </div>
+                          
                             <div class="relative w-full overflow-auto">
-                              <table
-                                class="w-full caption-bottom text-sm hidden"
-                              >
+                              <table class="w-full caption-bottom text-sm">
                                 <thead class="[&amp;_tr]:border-b">
                                   <tr
                                     class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
@@ -3585,67 +3897,42 @@
                                       class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0"
                                     >
                                       <div class="space-y-2">
-                                        <button
-                                          type="button"
-                                          role="combobox"
-                                          aria-controls="radix-:rli:"
-                                          aria-expanded="false"
-                                          aria-autocomplete="none"
-                                          dir="ltr"
-                                          data-state="closed"
-                                          data-placeholder=""
-                                          class="flex h-10 w-full items-center justify-between rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&amp;>span]:line-clamp-1"
-                                        >
-                                          <span style="pointer-events: none"
-                                            >Class of Shares</span
-                                          ><svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="24"
-                                            height="24"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            stroke-width="2"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            class="lucide lucide-chevron-down h-4 w-4 opacity-50"
-                                            aria-hidden="true"
+                                        <div>
+                                          <select
+                                            id="classOfShares"
+                                            formControlName="classOfShares"
+                                            class="flex h-10 w-full items-center rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                                           >
-                                            <path d="m6 9 6 6 6-6"></path>
-                                          </svg></button
-                                        ><select
-                                          aria-hidden="true"
-                                          tabindex="-1"
-                                          style="
-                                            position: absolute;
-                                            border: 0px;
-                                            width: 1px;
-                                            height: 1px;
-                                            padding: 0px;
-                                            margin: -1px;
-                                            overflow: hidden;
-                                            clip: rect(0px, 0px, 0px, 0px);
-                                            white-space: nowrap;
-                                            overflow-wrap: normal;
-                                          "
-                                        >
-                                          <option value=""></option>
-                                          <option value="Ordinary">
-                                            Ordinary800
-                                          </option>
-                                          <option value="Preferance">
-                                            Preferance800
-                                          </option>
-                                          <option value="Ordinary Class 1">
-                                            Ordinary Class 10
-                                          </option>
-                                          <option value="Ordinary">
-                                            Ordinary0
-                                          </option>
-                                          <option value="Ordinary12">
-                                            Ordinary120
-                                          </option>
-                                        </select>
+                                            <option value="">
+                                              Select Class of Shares
+                                            </option>
+                                            <option value="Ordinary">
+                                              Ordinary
+                                            </option>
+                                            <option value="Preferance">
+                                              Preference
+                                            </option>
+                                            <option value="Ordinary Class 1">
+                                              Ordinary Class 1
+                                            </option>
+                                            <option value="Ordinary Class 10">
+                                              Ordinary Class 10
+                                            </option>
+                                            <option value="Ordinary12">
+                                              Ordinary 12
+                                            </option>
+                                          </select>
+                                          <div
+                                            class="error-message"
+                                            *ngIf="
+                                              getErrorMessage5('classOfShares')
+                                            "
+                                          >
+                                            {{
+                                              getErrorMessage5("classOfShares")
+                                            }}
+                                          </div>
+                                        </div>
                                       </div>
                                     </td>
                                     <td
@@ -3656,7 +3943,14 @@
                                         type="number"
                                         value="800"
                                         name="shareDetails.0.noOfShares"
+                                        formControlName="noOfShares"
                                       />
+                                      <div
+                                        class="error-message"
+                                        *ngIf="getErrorMessage5('noOfShares')"
+                                      >
+                                        {{ getErrorMessage5("noOfShares") }}
+                                      </div>
                                     </td>
                                     <td
                                       class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0"
@@ -3664,6 +3958,7 @@
                                       <button
                                         class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-destructive text-destructive-foreground hover:bg-destructive/90 h-10 px-4 py-2"
                                         type="button"
+                                        (click)="clearInvateShareHoldersForm()"
                                       >
                                         <svg
                                           xmlns="http://www.w3.org/2000/svg"
@@ -3703,13 +3998,9 @@
                                 </tbody>
                               </table>
                             </div>
-                            <div>
-                              <button
-                                class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 my-4"
-                                type="submit"
-                              >
-                                Invite
-                              </button>
+                            
+                            <div class="flex justify-end">
+                              <button type="submit" [disabled]="this.InviteDirectorsForm.invalid" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">Submit</button>
                             </div>
                           </form>
                         </div>
@@ -3753,7 +4044,7 @@
                 </p>
               </div>
               <div class="p-6 pt-0 space-y-6">
-                <form class="space-y-8">
+                <form class="space-y-8" [formGroup]="comapnySecretaryForm" (ngSubmit)="comapnySecretarySubmission()" >
                   <div
                     class="grid sm:grid-cols-2 grid-cols-1 items-center gap-6"
                   >
@@ -3769,7 +4060,11 @@
                         aria-describedby=":rlp:-form-item-description"
                         aria-invalid="false"
                         name="tcspLicenseNo"
+                        formControlName="tcspLicenseNo"
                       />
+                      <div class="error-message" *ngIf="getErrorMessage6('tcspLicenseNo')">
+                        {{ getErrorMessage6('tcspLicenseNo') }}
+                      </div>
                     </div>
                     <div class="space-y-2">
                       <label
@@ -3784,7 +4079,11 @@
                         aria-describedby=":rlq:-form-item-description"
                         aria-invalid="false"
                         name="tcspReason"
+                        formControlName="tcspReason"
                       />
+                      <div class="error-message" *ngIf="getErrorMessage6('tcspReason')">
+                        {{ getErrorMessage6('tcspReason') }}
+                      </div>
                     </div>
                   </div>
                   <div class="relative w-full overflow-auto">
@@ -3838,113 +4137,57 @@
                           <td
                             class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0"
                           >
-                            <div class="space-y-2">
-                              <div
-                                role="radiogroup"
-                                aria-required="false"
-                                dir="ltr"
-                                class="flex justify-start items-center gap-10"
-                                id=":rlr:-form-item"
-                                aria-describedby=":rlr:-form-item-description"
-                                aria-invalid="false"
-                                tabindex="0"
-                                style="outline: none"
+                          <div
+                          role="radiogroup"
+                          class="flex justify-start items-center gap-5"
+                        >
+                          <!-- Person Radio Button -->
+                          <div
+                            class="space-y-1 flex items-center"
+                          >
+                            <label
+                              class="flex items-center gap-2"
+                            >
+                              <input
+                                type="radio"
+                                formControlName="type"
+                                class="bg-transparent hidden peer"
+                                value="person"
+                              />
+                              <span
+                                class="w-5 h-5 border rounded-full flex items-center justify-center peer-checked:bg-blue-600 peer-checked:border-transparent"
                               >
-                                <div
-                                  class="flex items-center space-x-3 space-y-0"
-                                >
-                                  <button
-                                    type="button"
-                                    role="radio"
-                                    aria-checked="true"
-                                    data-state="checked"
-                                    value="person"
-                                    class="aspect-square h-4 w-4 rounded-full border border-primary text-primary ring-offset-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                    id=":rls:-form-item"
-                                    aria-describedby=":rls:-form-item-description"
-                                    aria-invalid="false"
-                                    tabindex="-1"
-                                    data-radix-collection-item=""
-                                  >
-                                    <span
-                                      data-state="checked"
-                                      class="flex items-center justify-center"
-                                      ><svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="24"
-                                        height="24"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="lucide lucide-circle h-2.5 w-2.5 fill-current text-current"
-                                      >
-                                        <circle
-                                          cx="12"
-                                          cy="12"
-                                          r="10"
-                                        ></circle></svg
-                                    ></span></button
-                                  ><input
-                                    aria-hidden="true"
-                                    tabindex="-1"
-                                    type="radio"
-                                    value="person"
-                                    checked=""
-                                    style="
-                                      transform: translateX(-100%);
-                                      position: absolute;
-                                      pointer-events: none;
-                                      opacity: 0;
-                                      margin: 0px;
-                                      width: 16px;
-                                      height: 16px;
-                                    "
-                                  /><label
-                                    class="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 font-normal"
-                                    for=":rls:-form-item"
-                                    >Person</label
-                                  >
-                                </div>
-                                <div
-                                  class="flex items-center space-x-3 space-y-0"
-                                >
-                                  <button
-                                    type="button"
-                                    role="radio"
-                                    aria-checked="false"
-                                    data-state="unchecked"
-                                    value="company"
-                                    class="aspect-square h-4 w-4 rounded-full border border-primary text-primary ring-offset-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                    id=":rlu:-form-item"
-                                    aria-describedby=":rlu:-form-item-description"
-                                    aria-invalid="false"
-                                    tabindex="-1"
-                                    data-radix-collection-item=""
-                                  ></button
-                                  ><input
-                                    aria-hidden="true"
-                                    tabindex="-1"
-                                    type="radio"
-                                    value="company"
-                                    style="
-                                      transform: translateX(-100%);
-                                      position: absolute;
-                                      pointer-events: none;
-                                      opacity: 0;
-                                      margin: 0px;
-                                      width: 16px;
-                                      height: 16px;
-                                    "
-                                  /><label
-                                    class="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 font-normal"
-                                    >Company</label
-                                  >
-                                </div>
-                              </div>
-                            </div>
+                                <span
+                                  class="w-3 h-3 rounded-full bg-white peer-checked:block hidden"
+                                ></span>
+                              </span>
+                              Person
+                            </label>
+                          </div>
+                          <!-- Company Radio Button -->
+                          <div
+                            class="space-y-1 flex items-center"
+                          >
+                            <label
+                              class="flex items-center gap-2"
+                            >
+                              <input
+                                type="radio"
+                                formControlName="type"
+                                class="bg-transparent hidden peer"
+                                value="company"
+                              />
+                              <span
+                                class="w-5 h-5 border rounded-full flex items-center justify-center peer-checked:bg-blue-600 peer-checked:border-transparent"
+                              >
+                                <span
+                                  class="w-3 h-3 rounded-full bg-white peer-checked:block hidden"
+                                ></span>
+                              </span>
+                              Company
+                            </label>
+                          </div>
+                        </div>
                           </td>
                           <td
                             class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0"
@@ -3957,7 +4200,11 @@
                                 aria-describedby=":rm0:-form-item-description"
                                 aria-invalid="false"
                                 name="surname"
+                                formControlName="surname"
                               />
+                              <div class="error-message" *ngIf="getErrorMessage6('surname')">
+                                {{ getErrorMessage6('surname') }}
+                              </div>
                             </div>
                           </td>
                           <td
@@ -3972,7 +4219,11 @@
                                 aria-invalid="false"
                                 value=""
                                 name="name"
+                                formControlName="name"
                               />
+                              <div class="error-message" *ngIf="getErrorMessage6('name')">
+                                {{ getErrorMessage6('name') }}
+                              </div>
                             </div>
                           </td>
                           <td
@@ -3987,18 +4238,38 @@
                                 aria-invalid="false"
                                 value=""
                                 name="idNo"
+                                formControlName="idNo"
                               />
+                              <div class="error-message" *ngIf="getErrorMessage6('idNo')">
+                                {{ getErrorMessage6('idNo') }}
+                              </div>
                             </div>
                             <div class="space-y-2">
                               <input
                                 class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                                 placeholder="Upload a Copy"
-                                id=":rm3:-form-item"
-                                aria-describedby=":rm3:-form-item-description"
+                                id=":rl8:-form-item"
+                                aria-describedby=":rl8:-form-item-description"
                                 aria-invalid="false"
-                                type="File"
+                                type="file"
+                                accept="image/*"
                                 name="idProof"
+                                formControlName="idProof" 
+                                (change)="imagePreviewOnCompanySecretaryIDProof($event)"
                               />
+                            
+                              <div class="error-message" *ngIf="getErrorMessage6('idProof')">
+                                {{ getErrorMessage6('idProof') }}
+                              </div>
+                            
+                              <!-- Preview Image -->
+                              <div *ngIf="imagePreviewCompanySecretaryId" class="mt-4">
+                                <img
+                                  [src]="imagePreviewCompanySecretaryId"
+                                  alt="ID Proof Preview"
+                                  class="h-32 w-32 rounded-md border"
+                                />
+                              </div>
                             </div>
                           </td>
                         </tr>
@@ -4056,18 +4327,29 @@
                                 aria-invalid="false"
                                 value=""
                                 name="address"
+                                formControlName="address"
                               />
+                              <div class="error-message" *ngIf="getErrorMessage6('address')">
+                                {{ getErrorMessage6('address') }}
+                              </div>
                             </div>
                             <div class="space-y-2">
                               <input
-                                class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                placeholder="Upload a Copy"
-                                id=":rm5:-form-item"
-                                aria-describedby=":rm5:-form-item-description"
-                                aria-invalid="false"
-                                type="File"
-                                name="addressProof"
+                              class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                type="file"
+                                accept="image/*"
+                                formControlName="addressProof"
+                                (change)="imagePreviewOnCompanySecretaryAddressProof($event)"
                               />
+                              <div *ngIf="imagePreviewCompanySecretaryAddressProof">
+                                <img
+                                  [src]="imagePreviewCompanySecretaryAddressProof"
+                                  alt="Address Proof Preview"
+                                  class="h-32 w-32 rounded-md border"
+                                /> <div class="error-message" *ngIf="getErrorMessage6('addressProof')">
+                                  {{ getErrorMessage6('addressProof') }}
+                                </div>
+                              </div>
                             </div>
                           </td>
                           <td
@@ -4083,7 +4365,11 @@
                                 type="email"
                                 value=""
                                 name="email"
+                                formControlName="email"
                               />
+                              <div class="error-message" *ngIf="getErrorMessage6('email')">
+                                {{ getErrorMessage6('email') }}
+                              </div>
                             </div>
                           </td>
                           <td
@@ -4145,7 +4431,10 @@
                                   type="tel"
                                   value=""
                                   name="phone"
-                                />
+                                  formControlName="phone"
+                                /> <div class="error-message" *ngIf="getErrorMessage6('phone')">
+                                  {{ getErrorMessage6('phone') }}
+                                </div>
                               </div>
                             </div>
                           </td>
@@ -4157,6 +4446,7 @@
                     <button
                       class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-destructive text-destructive-foreground hover:bg-destructive/90 h-10 px-4 py-2 my-4"
                       type="submit"
+                      [disabled]="this.comapnySecretaryForm.invalid"
                     >
                       Submit
                     </button>
