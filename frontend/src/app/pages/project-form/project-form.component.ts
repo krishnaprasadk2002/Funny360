@@ -44,6 +44,7 @@ export class ProjectFormComponent implements OnInit {
   imagePreviewDirectorsAddressProof: string | ArrayBuffer | null = null;
   imagePreviewCompanySecretaryId: string | ArrayBuffer | null = null;
   imagePreviewCompanySecretaryAddressProof: string | ArrayBuffer | null = null;
+  addressProofDirectors: string | ArrayBuffer | null = null;
   directorsInfoOpen:boolean = false
   directorInvateOpen:boolean = false
   addressProofPreview: string | null = null;
@@ -53,6 +54,7 @@ export class ProjectFormComponent implements OnInit {
   shareHoldersForm!:FormGroup;
   inviteShareholderForm!:FormGroup
   directorInformationForm!:FormGroup
+  directorsInformation:any[]=[]
   InviteDirectorsForm!:FormGroup
   comapnySecretaryForm!:FormGroup
   selectedDirectorUserType: string = 'person';
@@ -1003,31 +1005,29 @@ imagePreviewOnDirectorsIDProof(event: Event): void {
   }
 }
 
+
 imagePreviewOnDirectorsAddressProof(event: Event): void {
-  const file = (event.target as HTMLInputElement).files?.[0];
+  const fileInput = event.target as HTMLInputElement;
+  const file = fileInput?.files?.[0];
+
   if (file) {
     const reader = new FileReader();
+    reader.onload = () => {
+      const base64AddressProof = reader.result as string;
+      console.log('Base64 address proof:', base64AddressProof);
 
-    reader.onload = (e) => {
-      this.imagePreviewDirectorsAddressProof = e.target?.result as string | ArrayBuffer |null; 
-    };
 
-    reader.onloadend = () => {
-      const result = reader.result; 
-      if (typeof result === 'string') {
-
-        this.directorInformationForm.patchValue({
-          addressProof: result, 
-        });
-        console.log('Base64 String:', result);
-      } else {
-        console.error('Result is not a string:', result); 
-      }
+      this.addressProofDirectors = base64AddressProof; 
     };
 
     reader.readAsDataURL(file);
+  } else {
+    this.addressProofDirectors = null; 
   }
 }
+
+
+
 
 
 directorFormSubmission(){
@@ -1043,6 +1043,7 @@ directorFormSubmission(){
 
   const formData = {
     ...this.directorInformationForm.value,
+    addressProof: this.addressProofDirectors,
     userId: userId, 
     companyId: companyId
   };
@@ -1061,6 +1062,7 @@ directorFormSubmission(){
       });
 
       this.directorInformationForm.reset();
+      this.fetchDirectorsInfo()
       this.imagePreviewDirectorsAddressProof = null;
       this.imagePreviewDirectorsId = null;
     },
@@ -1076,6 +1078,57 @@ directorFormSubmission(){
     }
   });
 }
+
+fetchDirectorsInfo(): void {
+  const userId = localStorage.getItem('userId');
+  const companyId = this.companyId;
+
+  if (!userId) {
+    console.error('Error: User ID is not found in localStorage');
+    return;
+  }
+
+  this.companyService.getDirectorsInfo(companyId, userId).subscribe({
+    next: (response) => {
+      this.directorsInformation = response.data;
+    },
+    error: (err) => {
+      console.error('Error fetching directors info:', err.message);
+    },
+  });
+}
+
+OnDeleteDirectorInfo(directorId: string): void {
+  Swal.fire({
+    title: 'Are you sure?',
+    text: 'You won\'t be able to revert this!',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Yes, delete it!',
+    cancelButtonText: 'Cancel',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.companyService.deleteDirector(directorId).subscribe({
+        next: (response) => {
+          console.log('Director deleted successfully:', response);
+          this.directorsInformation = this.directorsInformation.filter(
+            (director) => director._id !== directorId
+          );
+          Swal.fire('Deleted!', 'The director has been deleted.', 'success');
+        },
+        error: (error) => {
+          console.error('Error deleting director:', error.message);
+          Swal.fire('Error!', 'Failed to delete the director. Please try again.', 'error');
+        },
+      });
+    }
+  });
+}
+
+
+
 
 openDirectorInvateForm(){
   this.directorInvateOpen = !this.directorInvateOpen
@@ -1197,7 +1250,7 @@ comapnySecretarySubmission(){
       });
 
       this.comapnySecretaryForm.reset();
-      this.router.navigate(['/summary'])
+      this.router.navigate(['/summary', companyId]); 
       this.imagePreviewCompanySecretaryAddressProof = null;
       this.imagePreviewCompanySecretaryId = null;
     },

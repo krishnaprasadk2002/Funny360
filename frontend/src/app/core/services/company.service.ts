@@ -103,6 +103,33 @@ DirectorInfoCreation(data: any): Observable<{ message: string }> {
   );
 }
 
+getDirectorsInfo(companyId: string, userId: string): Observable<{ message: string; data: any[] }> {
+  const params = new HttpParams()
+    .set('companyId', companyId)
+    .set('userId', userId);
+
+  return this.http
+    .get<{ message: string; data: any[] }>(`${this.baseUrl}company/getDirectorsInfo`, { params })
+    .pipe(
+      catchError((error) => {
+        console.error('Error fetching directors info', error);
+        const errorMessage = error.error?.message || 'Failed to get directors info.';
+        return throwError(() => new Error(errorMessage));
+      })
+    );
+}
+
+deleteDirector(directorId: string): Observable<any> {
+  return this.http.delete(`${this.baseUrl}company/deleteDirector/${directorId}`).pipe(
+    catchError((error) => {
+      console.error("Error deleting Director information:", error);
+      const errorMessage = error.error?.message || "Failed to delete Director Information.";
+      return throwError(() => new Error(errorMessage));
+    })
+  )
+}
+
+
 directorInviteCreation(data: any): Observable<{ message: string }> {
   return this.http.post<{ message: string }>(`${this.baseUrl}company/inviteDirector`, data).pipe(
     catchError((error) => {

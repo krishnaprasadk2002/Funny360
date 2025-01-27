@@ -422,6 +422,51 @@ router.post("/directorInfoCreation", async (req, res) => {
 });
 
 
+// getting data directors info
+router.get('/getDirectorsInfo', async (req, res) => {
+  try {
+    const { companyId, userId } = req.query;
+
+    if (!companyId || !userId) {
+      return res.status(400).json({ message: "companyId and userId are required" });
+    }
+
+    const directors = await directorInfo.find({ companyId, userId });
+
+    if (directors.length === 0) {
+      return res.status(404).json({ message: "No directors found for the given company and user" });
+    }
+
+    res.status(200).json({ message: 'Directors retrieved successfully', data: directors });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to retrieve directors' });
+  }
+});
+
+// Delete Director Information
+router.delete('/deleteDirector/:id', async (req, res) => {
+  try {
+    const directorId = req.params.id;
+
+    if (!directorId) {
+      return res.status(400).json({ message: 'Director ID is required' });
+    }
+
+    const deletedDirector = await directorInfo.findByIdAndDelete(directorId);
+
+    if (!deletedDirector) {
+      return res.status(404).json({ message: 'Director not found' });
+    }
+
+    res.status(200).json({ message: 'Director deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting director:', error);
+    res.status(500).json({ message: 'Failed to delete director' });
+  }
+});
+
+
 // create InvateShareHolders
 router.post("/inviteDirector", async (req, res) => {
   try {

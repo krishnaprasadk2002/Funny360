@@ -45,7 +45,7 @@ export const routes: Routes = [
         component: AddCompanyComponent,
       },
       {
-        path: 'summary',
+        path: 'summary/:companyId',
         component: SummaryComponent,
       },
       {
